@@ -237,7 +237,14 @@ tbody tr:hover td{background:var(--dim)}
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
 var GROQ_KEY = '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';
-var CORS = 'https://corsproxy.io/?';
+// Try multiple CORS proxies in order until one works
+var CORS_PROXIES = [
+  'https://api.allorigins.win/raw?url=',
+  'https://corsproxy.io/?',
+  'https://cors-anywhere.herokuapp.com/',
+  'https://thingproxy.freeboard.io/fetch/',
+];
+var CORS = CORS_PROXIES[0];
 var briefCount = 0;
 var startTime = Date.now();
 
@@ -294,11 +301,23 @@ function switchView(v){
   if(v==='heatmap') setTimeout(renderHeatmap,60);
 }
 
+
+// ── PROXY FALLBACK ────────────────────────────────────────────
+async function tryFetch(url){
+  for(var i=0;i<CORS_PROXIES.length;i++){
+    try{
+      var r=await fetch(CORS_PROXIES[i]+encodeURIComponent(url),{signal:AbortSignal.timeout(9000)});
+      if(r.ok){ CORS=CORS_PROXIES[i]; return r; }
+    }catch(e){ console.warn('Proxy '+i+' failed:',e.message); }
+  }
+  throw new Error('All CORS proxies failed');
+}
+
 // ── OPENSKY (REAL) ────────────────────────────────────────────
 var allAC = [];
 async function loadAircraft(){
   try {
-    var resp = await fetch(CORS + encodeURIComponent('https://opensky-network.org/api/states/all'));
+    var resp = await tryFetch('https://opensky-network.org/api/states/all');
     if(!resp.ok) throw new Error('HTTP '+resp.status);
     var data = await resp.json();
     if(!data.states) throw new Error('No states');
@@ -359,7 +378,7 @@ async function loadGDELT(){
   try {
     var q = encodeURIComponent('conflict OR military OR war OR attack OR missile OR nuclear');
     var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=50&sort=DateDesc&format=json';
-    var resp = await fetch(CORS + encodeURIComponent(url));
+    var resp = await tryFetch(url);
     if(!resp.ok) throw new Error('HTTP '+resp.status);
     var data = await resp.json();
     if(!data.articles||!data.articles.length) throw new Error('No articles');
@@ -404,7 +423,7 @@ async function loadNews(kw){
   try {
     var q = encodeURIComponent(kw||'conflict OR military OR war OR attack');
     var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=30&sort=DateDesc&format=json&sourcelang=english';
-    var resp = await fetch(CORS + encodeURIComponent(url));
+    var resp = await tryFetch(url);
     if(!resp.ok) throw new Error('HTTP '+resp.status);
     var data = await resp.json();
     if(!data.articles||!data.articles.length) throw new Error('No articles');
