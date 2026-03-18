@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENTINEL // OSINT DASHBOARD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="hdr">
+    <div class="logo">SENTINEL<span class="logo-sep">//</span>OSINT</div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="switchView('dashboard')">DASHBOARD</button>
+      <button class="nav-btn" onclick="switchView('aircraft')">AIRCRAFT</button>
+      <button class="nav-btn" onclick="switchView('news')">LIVE NEWS</button>
+      <button class="nav-btn" onclick="switchView('heatmap')">CONFLICT MAP</button>
+      <button class="nav-btn" onclick="switchView('briefs')">AI BRIEFS</button>
+    </nav>
+    <div class="hdr-right">
+      <div class="pill live" id="feed-status"><span class="dot g"></span>CONNECTING...</div>
+      <div class="pill warn" id="alert-pill"><span class="dot a"></span><span id="alert-count">0 ALERTS</span></div>
+      <div class="pill alert" id="conflict-pill"><span class="dot r"></span>CONFLICT ACTIVE</div>
+      <div class="clock" id="utc-clock">00:00:00Z</div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="panel-head">
+          <span class="panel-title">✈ AIRCRAFT</span>
+          <span class="badge b" id="ac-badge">LOADING</span>
+        </div>
+        <div class="search-row">
+          <input type="text" id="ac-search" placeholder="SEARCH CALLSIGN..." autocomplete="off" oninput="filterAircraft(this.value)">
+        </div>
+        <div class="panel-body" id="aircraft-list">
+          <div class="loading-msg">Connecting to OpenSky Network...</div>
+        </div>
+      </div>
+      <div class="sidebar-bot">
+        <div class="panel-head">
+          <span class="panel-title">⚡ INTEL FEED</span>
+          <span class="badge r">GDELT LIVE</span>
+        </div>
+        <div class="panel-body" id="intel-feed">
+          <div class="loading-msg">Fetching GDELT events...</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="center">
+
+      <div class="view active" id="view-dashboard">
+        <canvas id="map-canvas"></canvas>
+        <div class="map-grid-overlay"></div>
+        <div class="map-hud">
+          <div class="hud-item"><span class="hud-label">AIRCRAFT</span><span class="hud-val b" id="hud-ac">--</span></div>
+          <div class="hud-item"><span class="hud-label">GDELT EVENTS</span><span class="hud-val r" id="hud-ev">--</span></div>
+          <div class="hud-item"><span class="hud-label">LAST SYNC</span><span class="hud-val" id="hud-sync">--</span></div>
+          <div class="hud-item"><span class="hud-label">NEWS ITEMS</span><span class="hud-val g" id="hud-news">--</span></div>
+        </div>
+      </div>
+
+      <div class="view" id="view-aircraft">
+        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
+          <span class="panel-title">LIVE AIRCRAFT — OpenSky Network (Real Data)</span>
+          <span class="badge b" id="ac-full-badge">LIVE</span>
+        </div>
+        <div class="table-wrap">
+          <table id="aircraft-table">
+            <thead>
+              <tr><th>CALLSIGN</th><th>COUNTRY</th><th>ALT (m)</th><th>SPEED (m/s)</th><th>HEADING</th><th>LAT</th><th>LON</th><th>ON GROUND</th></tr>
+            </thead>
+            <tbody id="aircraft-table-body">
+              <tr><td colspan="8" class="loading-msg">Loading OpenSky data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="view" id="view-news">
+        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
+          <span class="panel-title">LIVE NEWS — NewsAPI (Conflict / Geopolitics)</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <select id="news-filter" onchange="filterNews(this.value)">
+              <option value="">ALL TOPICS</option>
+              <option value="military">MILITARY</option>
+              <option value="conflict">CONFLICT</option>
+              <option value="nuclear">NUCLEAR</option>
+              <option value="missile">MISSILE</option>
+              <option value="NATO">NATO</option>
+              <option value="China">CHINA</option>
+            </select>
+            <span class="badge r" id="news-badge">LOADING</span>
+          </div>
+        </div>
+        <div id="news-feed" class="panel-body" style="flex:1;padding:8px">
+          <div class="loading-msg">Fetching NewsAPI headlines...</div>
+        </div>
+      </div>
+
+      <div class="view" id="view-heatmap">
+        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
+          <span class="panel-title">CONFLICT INTENSITY HEATMAP — GDELT Project</span>
+          <span class="badge r">LIVE DATA</span>
+        </div>
+        <div style="flex:1;position:relative;min-height:0">
+          <canvas id="heatmap-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+        </div>
+        <div class="heatmap-legend" id="heatmap-legend"></div>
+      </div>
+
+      <div class="view" id="view-briefs">
+        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
+          <span class="panel-title">AI INTELLIGENCE BRIEFS — Claude Sonnet</span>
+          <span class="badge p">AI POWERED</span>
+        </div>
+        <div id="api-key-banner" class="api-banner">
+          <div class="banner-text">⚠ Enter your Anthropic API key to enable live AI-generated briefs</div>
+          <div class="key-row">
+            <input type="password" id="anthropic-key" placeholder="sk-ant-api03-...">
+            <button class="save-btn" onclick="saveApiKey()">SAVE &amp; ACTIVATE</button>
+          </div>
+          <div class="banner-note">Key is stored only in sessionStorage — never sent anywhere except api.anthropic.com</div>
+        </div>
+        <div id="briefs-list" class="panel-body" style="flex:1;padding:8px"></div>
+        <button class="ai-btn" id="gen-brief-btn" onclick="generateBrief()">⚡ GENERATE LIVE AI INTELLIGENCE BRIEF</button>
+      </div>
+
+    </main>
+
+    <aside class="right-panel">
+      <div class="panel-head"><span class="panel-title">GLOBAL STATUS</span></div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-n r" id="sn-threats">--</div><div class="stat-l">THREATS</div></div>
+        <div class="stat-card"><div class="stat-n a" id="sn-events">--</div><div class="stat-l">GDELT</div></div>
+        <div class="stat-card"><div class="stat-n b" id="sn-aircraft">--</div><div class="stat-l">AIRCRAFT</div></div>
+        <div class="stat-card"><div class="stat-n g" id="sn-news">--</div><div class="stat-l">NEWS</div></div>
+        <div class="stat-card"><div class="stat-n p" id="sn-briefs">0</div><div class="stat-l">AI BRIEFS</div></div>
+        <div class="stat-card"><div class="stat-n" id="sn-uptime">0m</div><div class="stat-l">UPTIME</div></div>
+      </div>
+      <div class="threat-section">
+        <div class="threat-label-row">
+          <span class="panel-title" style="font-size:8px">THREAT INDEX</span>
+          <span class="threat-pct" id="threat-pct">CALCULATING...</span>
+        </div>
+        <div class="threat-bar"><div class="threat-fill" id="threat-fill" style="width:0%"></div></div>
+        <div class="threat-scale"><span>LOW</span><span>MED</span><span>HIGH</span><span>CRIT</span></div>
+      </div>
+      <div class="panel-head" style="border-top:1px solid var(--border)">
+        <span class="panel-title">TOP CONFLICT ZONES</span>
+      </div>
+      <div id="conflict-zones" class="panel-body" style="flex:1">
+        <div class="loading-msg">Analyzing GDELT...</div>
+      </div>
+      <div class="panel-head" style="border-top:1px solid var(--border)">
+        <span class="panel-title">DATA SOURCES</span>
+      </div>
+      <div class="source-list" id="source-list"></div>
+      <button class="ai-btn" style="margin:6px 8px" onclick="switchView('briefs');setTimeout(generateBrief,100)">⚡ AI BRIEF NOW</button>
+    </aside>
+
+  </div>
+
+  <footer class="ticker">
+    <div class="ticker-tag">SIGINT</div>
+    <div class="ticker-track"><div class="ticker-content" id="ticker-text">INITIALIZING FEEDS...</div></div>
+  </footer>
+
+</div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="map.js"></script>
+<script src="ui.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
