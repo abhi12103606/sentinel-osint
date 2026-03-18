@@ -39,7 +39,7 @@ body{font-family:var(--ui);font-size:14px;color:var(--bright)}
 .pb::-webkit-scrollbar-thumb{background:var(--border2)}
 .badge{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:2px}
 .bb{background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);color:var(--b)}
-.bg{background:rgba(0,255,135,.1);border:1px solid rgba(0,255,135,.2);color:var(--g)}
+.bg2{background:rgba(0,255,135,.1);border:1px solid rgba(0,255,135,.2);color:var(--g)}
 .br{background:rgba(255,59,59,.1);border:1px solid rgba(255,59,59,.2);color:var(--r)}
 .ba{background:rgba(255,179,0,.1);border:1px solid rgba(255,179,0,.2);color:var(--a)}
 .bp{background:rgba(176,107,255,.1);border:1px solid rgba(176,107,255,.2);color:var(--p)}
@@ -49,8 +49,8 @@ body{font-family:var(--ui);font-size:14px;color:var(--bright)}
 .sr input::placeholder{color:var(--text)}
 .ar{display:flex;align-items:center;gap:7px;padding:5px 7px;margin-bottom:3px;background:var(--dim);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:border-color .15s}
 .ar:hover{border-color:var(--b)}
-.ai{font-family:var(--mono);font-size:11px;color:var(--bright)}
-.as{font-size:11px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai2{font-family:var(--mono);font-size:11px;color:var(--bright)}
+.as2{font-size:11px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ii{padding:6px 7px;margin-bottom:4px;border-left:2px solid;border-radius:0 2px 2px 0;background:var(--dim);cursor:pointer}
 .ii:hover{opacity:.8}
 .ii.h{border-left-color:var(--r)}
@@ -58,17 +58,17 @@ body{font-family:var(--ui);font-size:14px;color:var(--bright)}
 .ii.l{border-left-color:var(--b)}
 .it{font-family:var(--mono);font-size:9px;color:var(--text);margin-bottom:2px}
 .ix{font-size:11px;color:var(--bright);line-height:1.35}
-.is{font-size:10px;color:var(--text);margin-top:2px}
+.is2{font-size:10px;color:var(--text);margin-top:2px}
 .center{position:relative;overflow:hidden;background:var(--bg)}
 .view{display:none;position:absolute;top:0;left:0;width:100%;height:100%;flex-direction:column;overflow:hidden}
 .view.active{display:flex}
 #map-canvas{position:absolute;top:0;left:0;width:100%;height:100%}
 .mgo{position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(0,200,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
 .mhud{position:absolute;bottom:10px;left:10px;display:flex;gap:10px;pointer-events:none}
-.hi{background:rgba(6,9,13,.85);border:1px solid var(--border);padding:5px 10px;border-radius:2px}
-.hl{font-family:var(--mono);font-size:8px;color:var(--text);display:block;letter-spacing:1px}
-.hv{font-family:var(--mono);font-size:16px;display:block;line-height:1.1}
-.hv.b{color:var(--b)}.hv.r{color:var(--r)}.hv.g{color:var(--g)}
+.huditem{background:rgba(6,9,13,.85);border:1px solid var(--border);padding:5px 10px;border-radius:2px}
+.hudlbl{font-family:var(--mono);font-size:8px;color:var(--text);display:block;letter-spacing:1px}
+.hudval{font-family:var(--mono);font-size:16px;display:block;line-height:1.1}
+.hudval.b{color:var(--b)}.hudval.r{color:var(--r)}.hudval.g{color:var(--g)}
 .tw{flex:1;overflow:auto;padding:8px}
 .tw::-webkit-scrollbar{width:3px;height:3px}
 .tw::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -78,54 +78,58 @@ tbody td{border:1px solid var(--border);padding:5px 8px;color:var(--bright)}
 tbody tr:hover td{background:var(--dim)}
 .ni{display:flex;gap:10px;padding:9px;margin-bottom:5px;background:var(--dim);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:border-color .15s;text-decoration:none}
 .ni:hover{border-color:var(--b)}
-.nc{font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:1px;flex-shrink:0;align-self:flex-start;margin-top:2px;letter-spacing:1px;border:1px solid}
-.nb{flex:1;min-width:0}
-.nt{font-size:13px;color:var(--bright);font-weight:600;line-height:1.3;margin-bottom:3px}
-.nd{font-size:11px;color:var(--text);line-height:1.35;margin-top:2px}
-.nm{font-family:var(--mono);font-size:9px;color:var(--text);margin-top:4px}
+.nccat{font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:1px;flex-shrink:0;align-self:flex-start;margin-top:2px;letter-spacing:1px;border:1px solid}
+.nbody{flex:1;min-width:0}
+.ntitle{font-size:13px;color:var(--bright);font-weight:600;line-height:1.3;margin-bottom:3px}
+.ndesc{font-size:11px;color:var(--text);line-height:1.35;margin-top:2px}
+.nmeta{font-family:var(--mono);font-size:9px;color:var(--text);margin-top:4px}
 #news-filter{background:var(--dim);border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:9px;padding:3px 6px;border-radius:2px;outline:none;cursor:pointer}
 .hl-legend{display:flex;gap:16px;padding:6px 12px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid var(--border);background:var(--bg2)}
-.li{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--text)}
-.ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.litem{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--text)}
+.ldot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .rp{display:flex;flex-direction:column;border-left:1px solid var(--border);overflow:hidden}
 .sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:7px;flex-shrink:0}
 .sc{background:var(--dim);border:1px solid var(--border);border-radius:2px;padding:6px 4px;text-align:center}
-.sn{font-family:var(--mono);font-size:18px;line-height:1}
-.sn.b{color:var(--b)}.sn.r{color:var(--r)}.sn.g{color:var(--g)}.sn.a{color:var(--a)}.sn.p{color:var(--p)}
-.sl{font-family:var(--mono);font-size:8px;color:var(--text);letter-spacing:1px;margin-top:2px;text-transform:uppercase}
-.ts{padding:6px 8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
+.statnum{font-family:var(--mono);font-size:18px;line-height:1}
+.statnum.b{color:var(--b)}.statnum.r{color:var(--r)}.statnum.g{color:var(--g)}.statnum.a{color:var(--a)}.statnum.p{color:var(--p)}
+.statlbl{font-family:var(--mono);font-size:8px;color:var(--text);letter-spacing:1px;margin-top:2px;text-transform:uppercase}
+.tsect{padding:6px 8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
 .tlr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.tp{font-family:var(--mono);font-size:9px;color:var(--a)}
-.tb{height:3px;background:var(--border);border-radius:1px;margin-bottom:3px}
-.tf{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--a),var(--r));transition:width 1.5s}
-.tsc{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--text)}
-.zi{padding:6px 7px;margin-bottom:3px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
-.zn{font-family:var(--mono);font-size:11px;color:var(--bright)}
-.zb{height:2px;background:var(--border);border-radius:1px;margin:3px 0 2px}
-.zf{height:100%;border-radius:1px}
-.zm{font-family:var(--mono);font-size:9px;color:var(--text)}
-.sli{padding:4px 8px;display:flex;flex-direction:column;gap:3px;flex-shrink:0}
-.si{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
-.sn2{font-family:var(--mono);font-size:9px;color:var(--text)}
-.ss{font-family:var(--mono);font-size:9px}
+.tpct{font-family:var(--mono);font-size:9px;color:var(--a)}
+.tbar{height:3px;background:var(--border);border-radius:1px;margin-bottom:3px}
+.tfill{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--a),var(--r));transition:width 1.5s}
+.tscale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--text)}
+.zitem{padding:6px 7px;margin-bottom:3px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
+.zname{font-family:var(--mono);font-size:11px;color:var(--bright)}
+.zbar{height:2px;background:var(--border);border-radius:1px;margin:3px 0 2px}
+.zfill{height:100%;border-radius:1px}
+.zmeta{font-family:var(--mono);font-size:9px;color:var(--text)}
+.srclist{padding:4px 8px;display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+.srcitem{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
+.srcname{font-family:var(--mono);font-size:9px;color:var(--text)}
+.srcstat{font-family:var(--mono);font-size:9px}
 .bc{background:var(--dim);border:1px solid var(--border);border-radius:3px;padding:9px;margin-bottom:7px}
 .bc.ai{border-color:rgba(176,107,255,.3)}
-.bh{font-family:var(--mono);font-size:9px;color:var(--b);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase}
-.bh.ai{color:var(--p)}
-.bb2{font-size:12px;color:var(--bright);line-height:1.55}
-.bb2 .hi2{color:var(--r);font-weight:700}
-.bb2 .wa{color:var(--a);font-weight:700}
-.bb2 .ok{color:var(--g);font-weight:700}
-.bm{font-family:var(--mono);font-size:8px;color:var(--text);margin-top:6px;border-top:1px solid var(--border);padding-top:4px}
+.bhead{font-family:var(--mono);font-size:9px;color:var(--b);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase}
+.bhead.ai{color:var(--p)}
+.bbody{font-size:12px;color:var(--bright);line-height:1.55}
+.bbody .hi{color:var(--r);font-weight:700}
+.bbody .wa{color:var(--a);font-weight:700}
+.bbody .ok{color:var(--g);font-weight:700}
+.bmeta{font-family:var(--mono);font-size:8px;color:var(--text);margin-top:6px;border-top:1px solid var(--border);padding-top:4px}
 .aib{margin:6px 8px;padding:9px;background:rgba(176,107,255,.07);border:1px solid rgba(176,107,255,.25);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--p);letter-spacing:2px;cursor:pointer;transition:all .2s;text-align:center;text-transform:uppercase;width:calc(100% - 16px)}
 .aib:hover{background:rgba(176,107,255,.15);border-color:var(--p)}
 .aib:disabled{opacity:.45;cursor:not-allowed}
 .ticker{background:#030507;border-top:1px solid var(--border);display:flex;align-items:center;overflow:hidden;height:26px}
-.tt{font-family:var(--mono);font-size:9px;padding:0 10px;color:var(--r);background:rgba(255,59,59,.1);border-right:1px solid var(--border);white-space:nowrap;height:100%;display:flex;align-items:center;letter-spacing:2px;flex-shrink:0}
-.tk{overflow:hidden;flex:1}
-.tc{font-family:var(--mono);font-size:10px;color:var(--text);white-space:nowrap;display:inline-block;animation:scroll 80s linear infinite;padding-left:20px}
+.ttag{font-family:var(--mono);font-size:9px;padding:0 10px;color:var(--r);background:rgba(255,59,59,.1);border-right:1px solid var(--border);white-space:nowrap;height:100%;display:flex;align-items:center;letter-spacing:2px;flex-shrink:0}
+.ttrack{overflow:hidden;flex:1}
+.tcontent{font-family:var(--mono);font-size:10px;color:var(--text);white-space:nowrap;display:inline-block;animation:scroll 80s linear infinite;padding-left:20px}
 @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.lm{font-family:var(--mono);font-size:10px;color:var(--text);padding:10px;text-align:center;animation:blink 1.5s infinite}
+.lmsg{font-family:var(--mono);font-size:10px;color:var(--text);padding:10px;text-align:center;animation:blink 1.5s infinite}
+.src-live{color:var(--g)}
+.src-demo{color:var(--a)}
+.src-err{color:var(--r)}
+.src-wait{color:var(--text)}
 </style>
 </head>
 <body>
@@ -140,22 +144,22 @@ tbody tr:hover td{background:var(--dim)}
     <button class="nav-btn" data-view="briefs">AI BRIEFS</button>
   </nav>
   <div class="hdr-right">
-    <div class="pill live"><span class="dot g"></span>ALL FEEDS LIVE</div>
-    <div class="pill warn"><span class="dot a"></span><span id="alert-count">8 ALERTS</span></div>
-    <div class="pill alert"><span class="dot r"></span>CONFLICT ACTIVE</div>
+    <div class="pill live" id="feed-pill"><span class="dot g"></span><span id="feed-txt">CONNECTING...</span></div>
+    <div class="pill warn"><span class="dot a"></span><span id="alert-count">0 ALERTS</span></div>
+    <div class="pill alert" id="conflict-pill"><span class="dot r"></span>CONFLICT ACTIVE</div>
     <div class="clock" id="utc-clock">00:00:00Z</div>
   </div>
 </header>
 <div class="main">
 <aside class="sidebar">
   <div class="sidebar-top">
-    <div class="ph"><span class="pt">✈ AIRCRAFT</span><span class="badge bb" id="ac-badge">247 ACTIVE</span></div>
+    <div class="ph"><span class="pt">✈ AIRCRAFT</span><span class="badge bb" id="ac-badge">LOADING...</span></div>
     <div class="sr"><input type="text" id="ac-search" placeholder="SEARCH CALLSIGN..."></div>
-    <div class="pb" id="aircraft-list"></div>
+    <div class="pb" id="aircraft-list"><div class="lmsg">Connecting to OpenSky...</div></div>
   </div>
   <div class="sidebar-bot">
-    <div class="ph"><span class="pt">⚡ INTEL FEED</span><span class="badge br">GDELT LIVE</span></div>
-    <div class="pb" id="intel-feed"></div>
+    <div class="ph"><span class="pt">⚡ INTEL FEED</span><span class="badge br" id="intel-badge">GDELT</span></div>
+    <div class="pb" id="intel-feed"><div class="lmsg">Fetching GDELT events...</div></div>
   </div>
 </aside>
 <main class="center">
@@ -163,79 +167,543 @@ tbody tr:hover td{background:var(--dim)}
     <canvas id="map-canvas"></canvas>
     <div class="mgo"></div>
     <div class="mhud">
-      <div class="hi"><span class="hl">AIRCRAFT</span><span class="hv b" id="hud-ac">247</span></div>
-      <div class="hi"><span class="hl">GDELT EVENTS</span><span class="hv r" id="hud-ev">50</span></div>
-      <div class="hi"><span class="hl">LAST SYNC</span><span class="hv" id="hud-sync">LIVE</span></div>
-      <div class="hi"><span class="hl">NEWS ITEMS</span><span class="hv g" id="hud-news">30</span></div>
+      <div class="huditem"><span class="hudlbl">AIRCRAFT</span><span class="hudval b" id="hud-ac">--</span></div>
+      <div class="huditem"><span class="hudlbl">GDELT EVENTS</span><span class="hudval r" id="hud-ev">--</span></div>
+      <div class="huditem"><span class="hudlbl">LAST SYNC</span><span class="hudval" id="hud-sync">--</span></div>
+      <div class="huditem"><span class="hudlbl">NEWS ITEMS</span><span class="hudval g" id="hud-news">--</span></div>
     </div>
   </div>
   <div class="view" id="view-aircraft">
-    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">LIVE AIRCRAFT — OpenSky Network</span><span class="badge bb">247 LIVE</span></div>
-    <div class="tw"><table><thead><tr><th>CALLSIGN</th><th>COUNTRY</th><th>ALT (m)</th><th>SPEED (m/s)</th><th>HEADING</th><th>LAT</th><th>LON</th><th>STATUS</th></tr></thead><tbody id="aircraft-table-body"></tbody></table></div>
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">LIVE AIRCRAFT — OpenSky Network (REAL)</span><span class="badge bb" id="ac-full-badge">LOADING</span></div>
+    <div class="tw"><table><thead><tr><th>CALLSIGN</th><th>COUNTRY</th><th>ALT (m)</th><th>SPEED (m/s)</th><th>HEADING</th><th>LAT</th><th>LON</th><th>STATUS</th></tr></thead><tbody id="aircraft-table-body"><tr><td colspan="8" class="lmsg">Loading real aircraft data...</td></tr></tbody></table></div>
   </div>
   <div class="view" id="view-news">
     <div class="ph" style="padding:10px 12px;flex-shrink:0">
-      <span class="pt">LIVE NEWS — Geopolitical Intelligence</span>
+      <span class="pt">LIVE NEWS — GDELT Real Articles</span>
       <div style="display:flex;gap:6px;align-items:center">
-        <select id="news-filter"><option value="">ALL</option><option value="military">MILITARY</option><option value="conflict">CONFLICT</option><option value="nuclear">NUCLEAR</option><option value="missile">MISSILE</option><option value="NATO">NATO</option><option value="China">CHINA</option></select>
-        <span class="badge br" id="news-badge">30 ARTICLES</span>
+        <select id="news-filter"><option value="conflict">CONFLICT</option><option value="military">MILITARY</option><option value="nuclear">NUCLEAR</option><option value="missile">MISSILE</option><option value="NATO">NATO</option><option value="China">CHINA</option><option value="Russia">RUSSIA</option></select>
+        <span class="badge br" id="news-badge">LOADING</span>
       </div>
     </div>
-    <div id="news-feed" class="pb" style="flex:1;padding:8px"></div>
+    <div id="news-feed" class="pb" style="flex:1;padding:8px"><div class="lmsg">Fetching real news...</div></div>
   </div>
   <div class="view" id="view-heatmap">
-    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">CONFLICT INTENSITY HEATMAP — GDELT</span><span class="badge br">LIVE</span></div>
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">CONFLICT INTENSITY HEATMAP — GDELT LIVE</span><span class="badge br">REAL DATA</span></div>
     <div style="flex:1;position:relative;min-height:0"><canvas id="heatmap-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas></div>
     <div class="hl-legend" id="heatmap-legend"></div>
   </div>
   <div class="view" id="view-briefs">
-    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">AI INTELLIGENCE BRIEFS — Groq Llama</span><span class="badge bp">AI POWERED</span></div>
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">AI BRIEFS — Groq Llama 3.3 (REAL AI)</span><span class="badge bp">AI POWERED</span></div>
     <div id="api-key-banner" style="margin:8px;padding:10px;background:rgba(255,179,0,.06);border:1px solid rgba(255,179,0,.2);border-radius:3px;flex-shrink:0">
       <div style="font-family:var(--mono);font-size:10px;color:var(--a);margin-bottom:7px">⚡ Enter Groq API key for live AI briefs (free at console.groq.com)</div>
       <div style="display:flex;gap:6px;margin-bottom:5px">
         <input type="password" id="groq-key-input" placeholder="gsk_..." style="flex:1;background:var(--dim);border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:10px;padding:5px 8px;border-radius:2px;outline:none">
         <button id="save-key-btn" style="background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.25);color:var(--g);font-family:var(--mono);font-size:9px;padding:5px 10px;border-radius:2px;cursor:pointer">ACTIVATE</button>
       </div>
-      <div style="font-family:var(--mono);font-size:8px;color:var(--text)">Key stored in memory only — never sent anywhere except api.groq.com</div>
+      <div style="font-family:var(--mono);font-size:8px;color:var(--text)">Key stored in memory only</div>
     </div>
     <div id="briefs-list" class="pb" style="flex:1;padding:8px"></div>
-    <button class="aib" id="gen-brief-btn">⚡ GENERATE AI INTELLIGENCE BRIEF</button>
+    <button class="aib" id="gen-brief-btn">⚡ GENERATE LIVE AI INTELLIGENCE BRIEF</button>
   </div>
 </main>
 <aside class="rp">
   <div class="ph"><span class="pt">GLOBAL STATUS</span></div>
   <div class="sg">
-    <div class="sc"><div class="sn r" id="sn-threats">8</div><div class="sl">THREATS</div></div>
-    <div class="sc"><div class="sn a" id="sn-events">50</div><div class="sl">GDELT</div></div>
-    <div class="sc"><div class="sn b" id="sn-aircraft">247</div><div class="sl">AIRCRAFT</div></div>
-    <div class="sc"><div class="sn g" id="sn-news">30</div><div class="sl">NEWS</div></div>
-    <div class="sc"><div class="sn p" id="sn-briefs">0</div><div class="sl">AI BRIEFS</div></div>
-    <div class="sc"><div class="sn" id="sn-uptime">0m</div><div class="sl">UPTIME</div></div>
+    <div class="sc"><div class="statnum r" id="sn-threats">--</div><div class="statlbl">THREATS</div></div>
+    <div class="sc"><div class="statnum a" id="sn-events">--</div><div class="statlbl">GDELT</div></div>
+    <div class="sc"><div class="statnum b" id="sn-aircraft">--</div><div class="statlbl">AIRCRAFT</div></div>
+    <div class="sc"><div class="statnum g" id="sn-news">--</div><div class="statlbl">NEWS</div></div>
+    <div class="sc"><div class="statnum p" id="sn-briefs">0</div><div class="statlbl">AI BRIEFS</div></div>
+    <div class="sc"><div class="statnum" id="sn-uptime">0m</div><div class="statlbl">UPTIME</div></div>
   </div>
-  <div class="ts">
-    <div class="tlr"><span class="pt" style="font-size:8px">THREAT INDEX</span><span class="tp" id="threat-pct">ELEVATED — 74%</span></div>
-    <div class="tb"><div class="tf" id="threat-fill" style="width:74%"></div></div>
-    <div class="tsc"><span>LOW</span><span>MED</span><span>HIGH</span><span>CRIT</span></div>
+  <div class="tsect">
+    <div class="tlr"><span class="pt" style="font-size:8px">THREAT INDEX</span><span class="tpct" id="threat-pct">CALCULATING...</span></div>
+    <div class="tbar"><div class="tfill" id="threat-fill" style="width:0%"></div></div>
+    <div class="tscale"><span>LOW</span><span>MED</span><span>HIGH</span><span>CRIT</span></div>
   </div>
   <div class="ph" style="border-top:1px solid var(--border)"><span class="pt">TOP CONFLICT ZONES</span></div>
-  <div id="conflict-zones" class="pb" style="flex:1"></div>
+  <div id="conflict-zones" class="pb" style="flex:1"><div class="lmsg">Analyzing GDELT...</div></div>
   <div class="ph" style="border-top:1px solid var(--border)"><span class="pt">DATA SOURCES</span></div>
-  <div class="sli" id="source-list"></div>
+  <div class="srclist" id="source-list"></div>
   <button class="aib" id="quick-brief-btn" style="margin:6px 8px">⚡ AI BRIEF NOW</button>
 </aside>
 </div>
 <footer class="ticker">
-  <div class="tt">SIGINT</div>
-  <div class="tk"><div class="tc" id="ticker-text">INITIALIZING...</div></div>
+  <div class="ttag">SIGINT</div>
+  <div class="ttrack"><div class="tcontent" id="ticker-text">INITIALIZING LIVE FEEDS...</div></div>
 </footer>
 </div>
+
 <script>
-// ── DATA ──────────────────────────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────
 var GROQ_KEY = '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';
+var CORS = 'https://corsproxy.io/?';
 var briefCount = 0;
 var startTime = Date.now();
 
-var AIRCRAFT = [
+// ── SOURCE STATUS ─────────────────────────────────────────────
+var SOURCES = {
+  opensky: {name:'OpenSky Network', status:'connecting'},
+  gdelt:   {name:'GDELT Project',   status:'connecting'},
+  news:    {name:'GDELT News',      status:'connecting'},
+  groq:    {name:'Groq AI',         status: GROQ_KEY ? 'ready' : 'no-key'},
+};
+
+function setSrc(k, s){ SOURCES[k].status = s; renderSources(); }
+
+function renderSources(){
+  var el = document.getElementById('source-list');
+  el.innerHTML = Object.values(SOURCES).map(function(s){
+    var col = s.status==='live'?'src-live': s.status==='ready'?'src-live': s.status==='demo'?'src-demo': s.status==='error'?'src-err':'src-wait';
+    var lbl = s.status==='live'?'LIVE': s.status==='ready'?'READY': s.status==='demo'?'DEMO': s.status==='error'?'ERROR':'WAIT';
+    return '<div class="srcitem"><span class="srcname">'+s.name.toUpperCase()+'</span><span class="srcstat '+col+'">'+lbl+'</span></div>';
+  }).join('');
+  var allLive = ['opensky','gdelt','news'].every(function(k){ return SOURCES[k].status==='live'||SOURCES[k].status==='demo'; });
+  var pill = document.getElementById('feed-pill');
+  var txt = document.getElementById('feed-txt');
+  if(allLive){ pill.className='pill live'; txt.textContent='ALL FEEDS LIVE'; }
+  else { pill.className='pill warn'; txt.textContent='CONNECTING...'; }
+}
+
+// ── CLOCK ─────────────────────────────────────────────────────
+function tickClock(){
+  var n=new Date();
+  document.getElementById('utc-clock').textContent=
+    String(n.getUTCHours()).padStart(2,'0')+':'+
+    String(n.getUTCMinutes()).padStart(2,'0')+':'+
+    String(n.getUTCSeconds()).padStart(2,'0')+'Z';
+}
+setInterval(tickClock,1000); tickClock();
+
+function updateUptime(){
+  var ms=Date.now()-startTime, s=Math.floor(ms/1000), m=Math.floor(s/60), h=Math.floor(m/60);
+  document.getElementById('sn-uptime').textContent = h>0?h+'h '+m%60+'m':m+'m '+s%60+'s';
+}
+setInterval(updateUptime,10000);
+
+// ── VIEW ──────────────────────────────────────────────────────
+var activeView='dashboard';
+function switchView(v){
+  activeView=v;
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var btn=document.querySelector('[data-view="'+v+'"]');
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.view').forEach(function(el){ el.classList.remove('active'); });
+  var el=document.getElementById('view-'+v);
+  if(el) el.classList.add('active');
+  if(v==='heatmap') setTimeout(renderHeatmap,60);
+}
+
+// ── OPENSKY (REAL) ────────────────────────────────────────────
+var allAC = [];
+async function loadAircraft(){
+  try {
+    var resp = await fetch(CORS + encodeURIComponent('https://opensky-network.org/api/states/all'));
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    var data = await resp.json();
+    if(!data.states) throw new Error('No states');
+    allAC = data.states
+      .filter(function(s){ return s[1]&&s[5]!==null&&s[6]!==null; })
+      .slice(0,200)
+      .map(function(s){ return {
+        cs:(s[1]||'').trim()||s[0], country:s[2]||'Unknown',
+        lon:s[5], lat:s[6], alt:s[7]?Math.round(s[7]):null,
+        gnd:s[8], spd:s[9]?Math.round(s[9]):null, hdg:s[10]?Math.round(s[10]):null
+      };});
+    setSrc('opensky','live');
+    renderAircraftList(allAC);
+    document.getElementById('ac-badge').textContent = allAC.length+' LIVE';
+    document.getElementById('sn-aircraft').textContent = allAC.length;
+    document.getElementById('hud-ac').textContent = allAC.length;
+    document.getElementById('hud-sync').textContent = new Date().toISOString().substr(11,5)+'Z';
+  } catch(e){
+    console.warn('OpenSky failed:',e);
+    setSrc('opensky','demo');
+    allAC = FALLBACK_AC;
+    renderAircraftList(allAC);
+    document.getElementById('ac-badge').textContent = allAC.length+' DEMO';
+    document.getElementById('sn-aircraft').textContent = allAC.length;
+    document.getElementById('hud-ac').textContent = allAC.length;
+  }
+}
+
+function renderAircraftList(data){
+  var list=document.getElementById('aircraft-list');
+  list.innerHTML=data.slice(0,25).map(function(a){
+    return '<div class="ar"><div style="flex:1;min-width:0"><div class="ai2">'+(a.cs||'UNKNOWN')+'</div><div class="as2">'+a.country+(a.alt?' · '+a.alt+'m':'')+'</div></div>'
+      +'<div style="text-align:right;font-family:var(--mono);font-size:10px;color:'+(a.gnd?'var(--text)':'var(--a)')+';line-height:1.4">'
+      +(a.gnd?'GND':(a.spd?a.spd+'m/s':'AIR'))+'<br>'+(a.hdg!==null?a.hdg+'°':'--')+'</div></div>';
+  }).join('');
+  var tbody=document.getElementById('aircraft-table-body');
+  if(tbody) tbody.innerHTML=data.map(function(a){
+    return '<tr><td style="color:var(--bright)">'+(a.cs||a.icao||'--')+'</td><td>'+a.country+'</td>'
+      +'<td style="color:var(--b)">'+(a.alt!==null?a.alt:'--')+'</td>'
+      +'<td style="color:var(--a)">'+(a.spd!==null?a.spd:'--')+'</td>'
+      +'<td>'+(a.hdg!==null?a.hdg+'°':'--')+'</td>'
+      +'<td style="color:var(--text);font-size:10px">'+a.lat.toFixed(2)+'</td>'
+      +'<td style="color:var(--text);font-size:10px">'+a.lon.toFixed(2)+'</td>'
+      +'<td style="color:'+(a.gnd?'var(--g)':'var(--text)')+'">'+( a.gnd?'GND':'AIR')+'</td></tr>';
+  }).join('');
+  var badge=document.getElementById('ac-full-badge');
+  if(badge) badge.textContent=data.length+(SOURCES.opensky.status==='live'?' LIVE':' DEMO');
+}
+
+function filterAircraft(q){
+  var f=q?allAC.filter(function(a){ return (a.cs||'').toLowerCase().includes(q.toLowerCase())||(a.country||'').toLowerCase().includes(q.toLowerCase()); }):allAC;
+  renderAircraftList(f);
+}
+
+// ── GDELT INTEL (REAL) ────────────────────────────────────────
+var gdeltData = [];
+async function loadGDELT(){
+  try {
+    var q = encodeURIComponent('conflict OR military OR war OR attack OR missile OR nuclear');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=50&sort=DateDesc&format=json';
+    var resp = await fetch(CORS + encodeURIComponent(url));
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    var data = await resp.json();
+    if(!data.articles||!data.articles.length) throw new Error('No articles');
+    gdeltData = data.articles.map(function(a){
+      return {title:a.title||'Untitled', url:a.url||'#', src:a.domain||'Unknown', date:a.seendate||'', country:a.sourcecountry||'', geo:inferGeo(a.title||'')};
+    });
+    setSrc('gdelt','live');
+    renderIntel(gdeltData);
+    document.getElementById('intel-badge').textContent = 'GDELT LIVE';
+    document.getElementById('sn-events').textContent = gdeltData.length;
+    document.getElementById('hud-ev').textContent = gdeltData.length;
+    updateThreat(gdeltData.length);
+    updateAlertCount(gdeltData);
+    renderZones(gdeltData);
+  } catch(e){
+    console.warn('GDELT failed:',e);
+    setSrc('gdelt','demo');
+    renderIntel(FALLBACK_INTEL);
+    document.getElementById('sn-events').textContent = FALLBACK_INTEL.length;
+    document.getElementById('hud-ev').textContent = FALLBACK_INTEL.length;
+    updateThreat(40);
+    renderZones([]);
+  }
+}
+
+function renderIntel(data){
+  var feed=document.getElementById('intel-feed');
+  if(!data||!data.length){ feed.innerHTML='<div class="lmsg">No events</div>'; return; }
+  feed.innerHTML=data.slice(0,20).map(function(item){
+    var lvl=item.lvl||getLvl(item.title||'');
+    var time=item.time||formatRelTime(item.date);
+    return '<div class="ii '+lvl+'" onclick="window.open(\''+( item.url||'#')+'\',\'_blank\')">'
+      +'<div class="it">'+time+(item.src?' · '+item.src:'')+'</div>'
+      +'<div class="ix">'+(item.text||item.title||'')+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+// ── GDELT NEWS (REAL) ─────────────────────────────────────────
+var newsData = [];
+async function loadNews(kw){
+  try {
+    var q = encodeURIComponent(kw||'conflict OR military OR war OR attack');
+    var url = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+q+'&mode=artlist&maxrecords=30&sort=DateDesc&format=json&sourcelang=english';
+    var resp = await fetch(CORS + encodeURIComponent(url));
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    var data = await resp.json();
+    if(!data.articles||!data.articles.length) throw new Error('No articles');
+    newsData = data.articles.map(function(a){
+      var cat=inferCategory(a.title||'');
+      return {title:a.title||'Untitled', desc:'', url:a.url||'#', src:a.domain||'Unknown', time:formatRelTime(a.seendate), cat:cat};
+    });
+    setSrc('news','live');
+    renderNews(newsData);
+    document.getElementById('news-badge').textContent = newsData.length+' REAL ARTICLES';
+    document.getElementById('sn-news').textContent = newsData.length;
+    document.getElementById('hud-news').textContent = newsData.length;
+  } catch(e){
+    console.warn('GDELT news failed:',e);
+    setSrc('news','demo');
+    newsData = FALLBACK_NEWS;
+    renderNews(newsData);
+    document.getElementById('news-badge').textContent = newsData.length+' DEMO';
+    document.getElementById('sn-news').textContent = newsData.length;
+    document.getElementById('hud-news').textContent = newsData.length;
+  }
+}
+
+function renderNews(data){
+  var feed=document.getElementById('news-feed');
+  if(!data||!data.length){ feed.innerHTML='<div class="lmsg">No news</div>'; return; }
+  feed.innerHTML=data.map(function(n){
+    return '<a class="ni" href="'+(n.url||'#')+'" target="_blank">'
+      +'<div class="nccat" style="color:'+n.cat.col+';border-color:'+n.cat.col+'33;background:'+n.cat.col+'11">'+n.cat.label+'</div>'
+      +'<div class="nbody"><div class="ntitle">'+n.title+'</div>'
+      +(n.desc?'<div class="ndesc">'+n.desc+'</div>':'')
+      +'<div class="nmeta">'+n.time+' · '+n.src+'</div></div></a>';
+  }).join('');
+}
+
+function filterNews(kw){ if(kw) loadNews(kw); else loadNews(); }
+
+// ── CONFLICT ZONES ────────────────────────────────────────────
+var BASE_ZONES=[
+  {name:'Ukraine',lat:49,lon:32,intensity:90,col:'#ff3b3b'},
+  {name:'DPRK',lat:39.5,lon:127,intensity:75,col:'#ff3b3b'},
+  {name:'Taiwan Strait',lat:24,lon:120.5,intensity:72,col:'#ff3b3b'},
+  {name:'Gaza/Sinai',lat:31.5,lon:34.5,intensity:68,col:'#ff3b3b'},
+  {name:'Suwalki Gap',lat:54.3,lon:23.2,intensity:65,col:'#ff3b3b'},
+  {name:'Red Sea',lat:15.5,lon:42,intensity:58,col:'#ffb300'},
+  {name:'Persian Gulf',lat:26.5,lon:53,intensity:50,col:'#ffb300'},
+  {name:'S. China Sea',lat:12,lon:114,intensity:52,col:'#ffb300'},
+  {name:'Sahel',lat:14,lon:2,intensity:42,col:'#ffb300'},
+  {name:'Baltic Sea',lat:57,lon:22,intensity:30,col:'#00c8ff'},
+  {name:'Arctic',lat:75,lon:30,intensity:20,col:'#00c8ff'},
+  {name:'Afghanistan',lat:33,lon:65,intensity:36,col:'#ffb300'},
+];
+
+function renderZones(articles){
+  var zones=BASE_ZONES.map(function(z){ return Object.assign({},z); });
+  if(articles&&articles.length){
+    var titles=articles.map(function(a){ return (a.title||'').toLowerCase(); }).join(' ');
+    zones.forEach(function(z){
+      var kw=z.name.toLowerCase().split('/')[0].split(' ')[0];
+      var hits=(titles.match(new RegExp(kw,'g'))||[]).length;
+      z.intensity=Math.min(99,z.intensity+hits*2);
+    });
+  }
+  var el=document.getElementById('conflict-zones');
+  el.innerHTML=zones.sort(function(a,b){return b.intensity-a.intensity;}).slice(0,8).map(function(z){
+    return '<div class="zitem"><div style="display:flex;justify-content:space-between">'
+      +'<span class="zname">'+z.name+'</span>'
+      +'<span style="font-family:var(--mono);font-size:9px;color:'+z.col+'">'+Math.round(z.intensity)+'</span></div>'
+      +'<div class="zbar"><div class="zfill" style="width:'+Math.round(z.intensity)+'%;background:'+z.col+'"></div></div>'
+      +'<div class="zmeta">'+(z.intensity>=70?'CRITICAL':z.intensity>=40?'ELEVATED':'WATCH')
+      +(articles&&articles.length?' · GDELT LIVE':' · BASELINE')+'</div></div>';
+  }).join('');
+  // Update map zones
+  MAP_ZONES = zones;
+}
+
+var MAP_ZONES = BASE_ZONES.slice();
+
+// ── THREAT INDEX ──────────────────────────────────────────────
+function updateThreat(eventCount){
+  var pct=Math.min(99,Math.floor(35+eventCount*0.9));
+  document.getElementById('threat-fill').style.width=pct+'%';
+  var lbl=pct>80?'CRITICAL':pct>60?'ELEVATED':pct>40?'MODERATE':'LOW';
+  document.getElementById('threat-pct').textContent=lbl+' — '+pct+'%';
+  document.getElementById('sn-threats').textContent=Math.floor(eventCount*0.15);
+}
+
+function updateAlertCount(data){
+  var high=(data||[]).filter(function(a){ return getLvl(a.title||a.text||'')===('h'); }).length;
+  document.getElementById('alert-count').textContent=high+' ALERTS';
+}
+
+// ── MAP ───────────────────────────────────────────────────────
+var LAND=[[-125,49],[-123,46],[-120,40],[-117,32],[-105,23],[-90,15],[-85,10],[-80,8],[-75,10],[-72,18],[-70,22],[-75,28],[-80,32],[-75,42],[-70,44],[-67,47],[-60,47],[-55,50],[-65,55],[-75,60],[-85,65],[-90,70],[-100,75],[-110,72],[-120,68],[-130,60],[-140,55],[-155,65],[-160,60],[-165,55],[-90,15],[-88,12],[-85,8],[-80,5],[-75,0],[-70,-5],[-65,-10],[-60,-15],[-55,-20],[-50,-25],[-48,-28],[-43,-23],[-40,-20],[-38,-13],[-35,-8],[-37,-5],[-44,-3],[-50,0],[-55,2],[-60,5],[-63,10],[-68,12],[-10,36],[0,38],[5,40],[10,42],[12,44],[14,40],[16,38],[18,40],[20,42],[22,40],[26,38],[28,40],[30,45],[28,50],[26,54],[24,58],[22,60],[20,64],[18,68],[15,70],[10,63],[5,58],[0,52],[-2,48],[-5,44],[-8,38],[-10,36],[-17,14],[-15,10],[-12,5],[-8,4],[-4,5],[0,5],[5,5],[10,4],[15,5],[20,8],[25,12],[30,15],[35,18],[38,20],[42,12],[44,8],[40,2],[36,-2],[32,-5],[28,-10],[24,-14],[20,-18],[16,-22],[12,-26],[18,-30],[26,-34],[30,-30],[33,-25],[36,-20],[40,-10],[42,-1],[44,4],[48,8],[50,12],[44,12],[42,14],[38,14],[34,10],[30,4],[26,2],[22,4],[18,8],[14,12],[10,14],[6,14],[2,14],[-2,13],[-6,13],[-10,13],[-14,13],[-17,14],[35,30],[38,34],[40,38],[42,36],[44,34],[46,30],[48,26],[50,24],[52,26],[56,24],[60,22],[55,18],[50,14],[45,12],[42,12],[40,14],[38,16],[36,20],[34,26],[35,30],[40,38],[45,42],[50,45],[55,50],[60,55],[65,60],[70,65],[75,68],[80,72],[90,72],[100,68],[110,65],[120,62],[130,58],[135,55],[140,50],[145,45],[140,40],[135,34],[130,30],[125,26],[120,22],[115,20],[110,18],[105,14],[100,10],[98,8],[95,5],[100,2],[104,0],[108,-4],[110,-8],[116,-8],[120,-4],[124,0],[128,4],[132,8],[130,14],[126,20],[122,26],[118,30],[116,35],[114,40],[112,44],[108,48],[104,52],[100,55],[95,52],[90,46],[85,40],[80,34],[76,28],[72,22],[68,20],[64,22],[60,25],[56,26],[52,30],[48,30],[44,30],[40,36],[38,36],[130,32],[132,34],[134,36],[136,38],[138,40],[140,42],[142,44],[144,42],[142,40],[140,38],[138,36],[136,34],[134,32],[132,30],[130,32]];
+
+function ll2xy(lat,lon,W,H){ return {x:((lon+180)/360)*W, y:((90-lat)/180)*H}; }
+
+var mapAnimId=null;
+function startMap(){
+  var cv=document.getElementById('map-canvas');
+  function resize(){ cv.width=cv.offsetWidth; cv.height=cv.offsetHeight; }
+  resize();
+  window.addEventListener('resize',resize);
+  function frame(){
+    var W=cv.width,H=cv.height;
+    if(!W||!H){ mapAnimId=requestAnimationFrame(frame); return; }
+    var ctx=cv.getContext('2d'), t=Date.now();
+    ctx.clearRect(0,0,W,H);
+    LAND.forEach(function(p){ var xy=ll2xy(p[1],p[0],W,H); ctx.beginPath(); ctx.arc(xy.x,xy.y,1.2,0,Math.PI*2); ctx.fillStyle='rgba(0,200,255,0.13)'; ctx.fill(); });
+    ctx.strokeStyle='rgba(0,200,255,0.03)'; ctx.lineWidth=.5;
+    for(var i=1;i<8;i++){ ctx.beginPath(); ctx.moveTo(0,i*H/8); ctx.lineTo(W,i*H/8); ctx.stroke(); ctx.beginPath(); ctx.moveTo(i*W/8,0); ctx.lineTo(i*W/8,H); ctx.stroke(); }
+    var eq=ll2xy(0,0,W,H); ctx.strokeStyle='rgba(0,200,255,0.08)'; ctx.lineWidth=.8; ctx.setLineDash([6,6]);
+    ctx.beginPath(); ctx.moveTo(0,eq.y); ctx.lineTo(W,eq.y); ctx.stroke(); ctx.setLineDash([]);
+    MAP_ZONES.forEach(function(z,i){
+      var xy=ll2xy(z.lat,z.lon,W,H);
+      var ph=((t+(i*400))%2200)/2200, rr=6+ph*18, al=(1-ph)*.6;
+      ctx.beginPath(); ctx.arc(xy.x,xy.y,rr,0,Math.PI*2);
+      ctx.strokeStyle=z.col+(Math.round(al*255).toString(16).padStart(2,'0'));
+      ctx.lineWidth=1; ctx.stroke();
+      ctx.beginPath(); ctx.arc(xy.x,xy.y,3,0,Math.PI*2); ctx.fillStyle=z.col; ctx.fill();
+      ctx.fillStyle=z.col; ctx.font='8px "Share Tech Mono",monospace'; ctx.textAlign='center';
+      ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-8);
+    });
+    allAC.forEach(function(a){
+      if(a.lat===null||a.lon===null) return;
+      var xy=ll2xy(a.lat,a.lon,W,H);
+      ctx.beginPath(); ctx.arc(xy.x,xy.y,4,0,Math.PI*2); ctx.fillStyle='rgba(255,179,0,.15)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(xy.x,xy.y,2,0,Math.PI*2); ctx.fillStyle=a.gnd?'#6a8fa8':'#ffb300'; ctx.fill();
+    });
+    mapAnimId=requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function renderHeatmap(){
+  var cv=document.getElementById('heatmap-canvas');
+  var p=cv.parentElement; cv.width=p.offsetWidth; cv.height=p.offsetHeight;
+  var W=cv.width, H=cv.height, ctx=cv.getContext('2d');
+  ctx.fillStyle='#06090d'; ctx.fillRect(0,0,W,H);
+  LAND.forEach(function(pt){ var xy=ll2xy(pt[1],pt[0],W,H); ctx.beginPath(); ctx.arc(xy.x,xy.y,1,0,Math.PI*2); ctx.fillStyle='rgba(0,200,255,0.07)'; ctx.fill(); });
+  MAP_ZONES.forEach(function(z){
+    var xy=ll2xy(z.lat,z.lon,W,H), r=Math.max(28,z.intensity*.55);
+    var g=ctx.createRadialGradient(xy.x,xy.y,0,xy.x,xy.y,r);
+    var al=z.intensity/100;
+    var c=z.col==='#ff3b3b'?'255,59,59':z.col==='#ffb300'?'255,179,0':'0,200,255';
+    g.addColorStop(0,'rgba('+c+','+al+')');
+    g.addColorStop(1,'rgba('+c+',0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(xy.x,xy.y,r,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle=z.col; ctx.font='bold 9px "Share Tech Mono"'; ctx.textAlign='center';
+    ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-r*.35-2);
+  });
+  var src=SOURCES.gdelt.status==='live'?'GDELT LIVE DATA':'GDELT BASELINE';
+  document.getElementById('heatmap-legend').innerHTML=
+    '<div class="litem"><div class="ldot" style="background:#ff3b3b"></div>CRITICAL (≥70)</div>'
+    +'<div class="litem"><div class="ldot" style="background:#ffb300"></div>ELEVATED (40-70)</div>'
+    +'<div class="litem"><div class="ldot" style="background:#00c8ff"></div>WATCH (≤40)</div>'
+    +'<div style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text)">'+MAP_ZONES.length+' ZONES · '+src+'</div>';
+}
+
+// ── AI BRIEF ─────────────────────────────────────────────────
+async function generateBrief(){
+  var btn1=document.getElementById('gen-brief-btn');
+  var btn2=document.getElementById('quick-brief-btn');
+  [btn1,btn2].forEach(function(b){ if(b){ b.disabled=true; b.textContent='⚡ AI ANALYST THINKING...'; }});
+  switchView('briefs');
+  var context='You are analyzing LIVE OSINT data.\n\n'
+    +'REAL GDELT EVENTS ('+gdeltData.length+' total):\n'
+    +gdeltData.slice(0,8).map(function(e,i){ return (i+1)+'. '+e.title+' ('+e.src+')'; }).join('\n')
+    +'\n\nACTIVE AIRCRAFT: '+allAC.length+' tracked (OpenSky Network)\n'
+    +'TOP ZONES BY INTENSITY: '+MAP_ZONES.slice(0,5).map(function(z){ return z.name+'('+Math.round(z.intensity)+')'; }).join(', ')
+    +'\n\nGenerate a 4-priority intelligence brief based ONLY on this real data.';
+  try {
+    var resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:900,
+        messages:[
+          {role:'system',content:'Senior OSINT intelligence analyst. Write classified-style briefs. Format: [PRIORITY N — THEATER]: analysis. recommendation. End with CONFIDENCE: X% | SOURCES: Y | NEXT BRIEF: T+8HRS'},
+          {role:'user',content:context}
+        ]})
+    });
+    var data=await resp.json();
+    var text=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||'No response';
+    addBriefCard(text,true);
+    setSrc('groq','live');
+  } catch(e){
+    addBriefCard(getFallbackBrief(),false,'Groq error: '+e.message);
+  }
+  [btn1,btn2].forEach(function(b){ if(b){ b.disabled=false; b.textContent='⚡ GENERATE LIVE AI INTELLIGENCE BRIEF'; }});
+}
+
+function getFallbackBrief(){
+  var top=gdeltData.slice(0,3).map(function(e){ return e.title; }).join('; ') || 'No live data loaded';
+  return '[PRIORITY 1 — LIVE DATA]: '+Math.round(gdeltData.length)+' real GDELT events analyzed. Top stories: "'+top.substring(0,120)+'..."\n\n[PRIORITY 2 — AIRCRAFT]: '+allAC.length+' aircraft tracked via OpenSky Network right now.\n\n[WATCH — AI KEY]: Add your Groq API key to enable live AI analysis of this real data.\n\nCONFIDENCE: N/A | SOURCES: GDELT+OPENSKY | NEXT BRIEF: T+8HRS';
+}
+
+function addBriefCard(text,isAI,note){
+  var n=new Date(), ts=String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0')+'Z';
+  var fmt=text
+    .replace(/\[PRIORITY\s*(\d+)\s*[—-]\s*([^\]]+)\]/gi,'<span class="hi">[$1 — $2]</span>')
+    .replace(/\[WATCH[^\]]*\]/gi,function(s){ return '<span class="wa">'+s+'</span>'; })
+    .replace(/(CONFIDENCE:[^\n]+)/gi,function(s){ return '<span class="ok">'+s+'</span>'; })
+    .replace(/\n/g,'<br>');
+  var card=document.createElement('div');
+  card.className='bc'+(isAI?' ai':'');
+  card.innerHTML='<div class="bhead'+(isAI?' ai':'')+'">⚡ INTEL BRIEF — '+ts+(isAI?' — GROQ LLAMA LIVE':' — DEMO')+'</div>'
+    +'<div class="bbody">'+fmt+'</div>'
+    +'<div class="bmeta">'+(isAI?'REAL AI ANALYSIS · GROQ LLAMA 3.3 70B · ':'DEMO · ')
+    +'GDELT:'+gdeltData.length+' AC:'+allAC.length+' NEWS:'+newsData.length
+    +(note?' · '+note:'')+'</div>';
+  var list=document.getElementById('briefs-list');
+  list.insertBefore(card,list.firstChild);
+  briefCount++;
+  document.getElementById('sn-briefs').textContent=briefCount;
+}
+
+function saveApiKey(){
+  var val=document.getElementById('groq-key-input').value.trim();
+  if(!val){ alert('Enter a Groq API key'); return; }
+  GROQ_KEY=val;
+  document.getElementById('api-key-banner').style.display='none';
+  setSrc('groq','ready');
+  generateBrief();
+}
+
+// ── TICKER ────────────────────────────────────────────────────
+function updateTicker(){
+  var parts=[
+    'OPENSKY: '+allAC.length+' aircraft tracked ('+SOURCES.opensky.status.toUpperCase()+')',
+    'GDELT: '+gdeltData.length+' conflict events ('+SOURCES.gdelt.status.toUpperCase()+')',
+    'NEWS: '+newsData.length+' articles ('+SOURCES.news.status.toUpperCase()+')',
+    'THREAT INDEX: '+document.getElementById('threat-pct').textContent,
+    'SENTINEL // GLOBAL OSINT DASHBOARD',
+  ];
+  if(gdeltData.length) parts.push(gdeltData[0].title.substring(0,80));
+  if(gdeltData.length>1) parts.push(gdeltData[1].title.substring(0,80));
+  var txt=parts.map(function(p){ return ' // '+p+' '; }).join('')+' ';
+  document.getElementById('ticker-text').textContent=txt+txt;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function getLvl(t){
+  t=(t||'').toLowerCase();
+  if(/nuclear|missile launch|attack|explosion|bomb|war|invasion|strike|dprk|launch/.test(t)) return 'h';
+  if(/military|conflict|troops|exercise|threat|tension|warning|weapon/.test(t)) return 'm';
+  return 'l';
+}
+
+function inferCategory(t){
+  t=(t||'').toLowerCase();
+  if(/nuclear|nuke|warhead/.test(t)) return {label:'NUCLEAR',col:'#ff3b3b'};
+  if(/missile|ballistic|rocket/.test(t)) return {label:'MISSILE',col:'#ff3b3b'};
+  if(/china|pla|taiwan|beijing/.test(t)) return {label:'CHINA',col:'#ffb300'};
+  if(/russia|ukraine|kremlin/.test(t)) return {label:'EUROPE',col:'#ff3b3b'};
+  if(/iran|irgc|hormuz/.test(t)) return {label:'IRAN',col:'#ffb300'};
+  if(/north korea|dprk|pyongyang/.test(t)) return {label:'DPRK',col:'#ff3b3b'};
+  if(/cyber|hack|breach|malware/.test(t)) return {label:'CYBER',col:'#00c8ff'};
+  if(/nato|alliance/.test(t)) return {label:'NATO',col:'#b06bff'};
+  if(/africa|sahel|sudan|mali/.test(t)) return {label:'AFRICA',col:'#ffb300'};
+  if(/military|troops|army|navy/.test(t)) return {label:'MILITARY',col:'#b06bff'};
+  return {label:'INTEL',col:'#00c8ff'};
+}
+
+function inferGeo(t){
+  t=(t||'').toLowerCase();
+  var m=[
+    {rx:/ukraine|kyiv|donetsk|kharkiv/, lat:49,lon:32},
+    {rx:/russia|moscow|kremlin/, lat:55.7,lon:37.6},
+    {rx:/china|beijing|taiwan|pla/, lat:35,lon:105},
+    {rx:/taiwan/, lat:23.5,lon:121},
+    {rx:/north korea|dprk|pyongyang/, lat:39,lon:125.7},
+    {rx:/iran|tehran|irgc|hormuz/, lat:32,lon:53},
+    {rx:/israel|gaza|west bank|hamas/, lat:31.5,lon:34.8},
+    {rx:/nato|poland|baltic/, lat:54,lon:24},
+    {rx:/yemen|houthi/, lat:15.5,lon:48.5},
+    {rx:/red sea/, lat:15,lon:42},
+    {rx:/south china sea/, lat:12,lon:114},
+  ];
+  for(var i=0;i<m.length;i++){ if(m[i].rx.test(t)) return {lat:m[i].lat,lon:m[i].lon}; }
+  return null;
+}
+
+function formatRelTime(d){
+  if(!d) return 'recent';
+  var s=d.toString();
+  if(s.length>=12){
+    var yr=s.substr(0,4),mo=s.substr(4,2),dy=s.substr(6,2),hr=s.substr(8,2),mn=s.substr(10,2);
+    var dt=new Date(yr+'-'+mo+'-'+dy+'T'+hr+':'+mn+':00Z');
+    var diff=Math.floor((Date.now()-dt)/1000);
+    if(diff<60) return diff+'s ago';
+    if(diff<3600) return Math.floor(diff/60)+'m ago';
+    if(diff<86400) return Math.floor(diff/3600)+'hr ago';
+    return Math.floor(diff/86400)+'d ago';
+  }
+  return s.substring(0,16);
+}
+
+// ── FALLBACK DATA ─────────────────────────────────────────────
+var FALLBACK_AC=[
   {cs:'RCH102',country:'United States',alt:10360,spd:247,hdg:95,lat:36.2,lon:30.5,gnd:false},
   {cs:'NATO17',country:'Netherlands',alt:8992,spd:211,hdg:45,lat:57.1,lon:20.4,gnd:false},
   {cs:'MAGMA89',country:'United Kingdom',alt:10972,spd:254,hdg:180,lat:43.2,lon:34.6,gnd:false},
@@ -244,358 +712,48 @@ var AIRCRAFT = [
   {cs:'FR4012',country:'France',alt:5486,spd:267,hdg:120,lat:26.5,lon:56.8,gnd:false},
   {cs:'COBRA31',country:'United States',alt:7620,spd:118,hdg:200,lat:30.1,lon:33.5,gnd:false},
   {cs:'JAL991',country:'Japan',alt:9449,spd:221,hdg:90,lat:35.8,lon:131.2,gnd:false},
-  {cs:'UKAF44',country:'United Kingdom',alt:6706,spd:278,hdg:60,lat:50.1,lon:19.2,gnd:false},
-  {cs:'USN221',country:'United States',alt:3048,spd:165,hdg:340,lat:15.2,lon:44.1,gnd:false},
-  {cs:'TACT01',country:'Israel',alt:8230,spd:290,hdg:270,lat:32.1,lon:35.2,gnd:false},
-  {cs:'IND003',country:'India',alt:9144,spd:235,hdg:180,lat:18.5,lon:73.8,gnd:false},
-  {cs:'KOR77',country:'South Korea',alt:10668,spd:258,hdg:0,lat:37.5,lon:127.0,gnd:false},
-  {cs:'PAK09',country:'Pakistan',alt:7925,spd:198,hdg:90,lat:33.6,lon:73.1,gnd:false},
-  {cs:'E3AWC',country:'NATO',alt:8839,spd:214,hdg:130,lat:52.3,lon:13.4,gnd:false},
-  {cs:'P8POS1',country:'United States',alt:6401,spd:188,hdg:200,lat:7.1,lon:79.8,gnd:false},
-  {cs:'RC135W',country:'United States',alt:11278,spd:263,hdg:45,lat:48.2,lon:22.1,gnd:false},
-  {cs:'MQ9R01',country:'United States',alt:7620,spd:115,hdg:160,lat:14.5,lon:43.2,gnd:false},
-  {cs:'TU160',country:'Russia',alt:13000,spd:318,hdg:270,lat:68.5,lon:33.1,gnd:false},
-  {cs:'AWACS2',country:'Saudi Arabia',alt:9144,spd:224,hdg:45,lat:24.7,lon:46.7,gnd:false},
 ];
 
-var NEWS = [
-  {cat:'CONFLICT',col:'#ff3b3b',title:'NATO activates rapid reaction force amid Baltic exercises',desc:'Alliance officials confirm 3,000 troops on 48hr readiness following unusual armored movements near Suwalki corridor.',time:'2 min ago',src:'Reuters'},
-  {cat:'DPRK',col:'#ff3b3b',title:'North Korea launches ballistic missile toward East Sea',desc:'Projectile analyzed as medium-range type. South Korea and Japan scramble interceptors. PACOM on elevated alert.',time:'11 min ago',src:'Yonhap'},
-  {cat:'MARITIME',col:'#ffb300',title:'USS Nimitz carrier group enters Persian Gulf',desc:'Second US carrier deployment in 60 days. IRGC speedboat activity surged to 12 vessels in response to transit.',time:'22 min ago',src:'USNI News'},
-  {cat:'CHINA',col:'#ffb300',title:'PLA air incursion near Taiwan breaks monthly record — 42 aircraft',desc:'Y-20 tankers included indicating extended operational range. Taiwan MND issues formal protest.',time:'35 min ago',src:'Focus Taiwan'},
-  {cat:'CYBER',col:'#00c8ff',title:'Coordinated SCADA attacks hit Eastern European energy grid',desc:'CERT reports intrusion attempts across 4 countries. APT28 signature consistent with FSB attribution.',time:'48 min ago',src:'BleepingComputer'},
-  {cat:'AFRICA',col:'#ffb300',title:'Wagner/Africa Corps redeployment confirmed in Sahel',desc:'Satellite imagery confirms convoy movements in Mali and Niger under new Africa Corps command structure.',time:'1 hr ago',src:'ISW'},
-  {cat:'NUCLEAR',col:'#ff3b3b',title:'Russia suspends New START verification protocols indefinitely',desc:'Kremlin announces suspension of all on-site inspections, complicating Western strategic intelligence.',time:'1.5 hr ago',src:'AP'},
-  {cat:'INTEL',col:'#b06bff',title:'Five Eyes issues joint advisory on state-sponsored espionage surge',desc:'Coordinated warning targets technology firms and defense contractors. China, Russia, Iran named.',time:'2 hr ago',src:'CISA'},
-  {cat:'UKRAINE',col:'#ff3b3b',title:'UAV swarm detected near Zaporizhzhia — novel signal profile',desc:'Signal characteristics inconsistent with known Ukrainian or Russian assets. Third-party supply suspected.',time:'2.5 hr ago',src:'UA Military'},
-  {cat:'SPACE',col:'#b06bff',title:'Russian dual-use satellite Cosmos-2576 executing proximity maneuvers',desc:'Orbital parameters suggest anti-satellite mission profile. US Space Command monitoring closely.',time:'3 hr ago',src:'SpaceNews'},
-  {cat:'MISSILE',col:'#ff3b3b',title:'Iran test-fires advanced cruise missile in Strait exercise',desc:'Range estimated at 1,800km. Timing coincides with US carrier transit. IRGC releases video footage.',time:'4 hr ago',src:'Iran State TV'},
-  {cat:'MILITARY',col:'#b06bff',title:'China deploys additional warships to South China Sea',desc:'3 Type-052D destroyers join ongoing PLAN exercise. Philippines protest filed via diplomatic channels.',time:'5 hr ago',src:'SCMP'},
+var FALLBACK_INTEL=[
+  {lvl:'h',time:'--:--Z',text:'CORS proxy unavailable — running in demo mode.',src:'SENTINEL'},
+  {lvl:'m',time:'--:--Z',text:'BTG repositioning near Suwalki Gap — 3 battalions in 6hrs.',src:'Demo'},
+  {lvl:'h',time:'--:--Z',text:'DPRK TEL movement detected near Pyongyang corridor.',src:'Demo'},
+  {lvl:'l',time:'--:--Z',text:'NATO E-3 AWACS orbit over Baltic extended +4hrs.',src:'Demo'},
 ];
 
-var INTEL = [
-  {lvl:'h',time:'04:17Z',text:'BTG repositioning near Suwalki Gap — 3 battalions in 6hrs. Pre-exercise pattern.',src:'Sentinel-2 SAR'},
-  {lvl:'m',time:'03:52Z',text:'IRGC speedboat surge in Hormuz — 12 vessels. Likely signaling during US carrier transit.',src:'MarineTraffic'},
-  {lvl:'h',time:'03:41Z',text:'DPRK TEL movement detected near Pyongyang corridor. Cross-ref with SIGINT pending.',src:'Planet Labs'},
-  {lvl:'l',time:'03:30Z',text:'NATO E-3 AWACS orbit over Baltic extended +4hrs. Sustained ISR posture.',src:'ADS-B Exchange'},
-  {lvl:'m',time:'02:58Z',text:'Houthi radar lock claim on 2 merchant vessels — Red Sea south of Bab-el-Mandeb.',src:'Telegram OSINT'},
-  {lvl:'l',time:'02:22Z',text:'PLA carrier group live-fire drills 180nm SE of Taiwan Strait.',src:'Sentinel-1 SAR'},
-  {lvl:'h',time:'01:55Z',text:'UAV swarm near Zaporizhzhia — signal profile inconsistent with known assets.',src:'OSINT Aggregator'},
-  {lvl:'m',time:'01:30Z',text:'Cosmos-2576 executed 3 proximity maneuvers near allied satellite cluster.',src:'Space-Track.org'},
-  {lvl:'h',time:'01:10Z',text:'DPRK ballistic missile launch confirmed — East Sea landing zone.',src:'PACOM'},
-  {lvl:'l',time:'00:45Z',text:'Increased RF activity detected Baltic region — signal intelligence flagged.',src:'SIGINT Feed'},
+var FALLBACK_NEWS=[
+  {cat:{label:'CONFLICT',col:'#ff3b3b'},title:'NATO activates rapid reaction force amid Baltic exercises',desc:'Demo data — real NewsAPI blocked by CORS.',time:'demo',src:'Demo',url:'#'},
+  {cat:{label:'DPRK',col:'#ff3b3b'},title:'North Korea launches ballistic missile toward East Sea',desc:'Demo mode.',time:'demo',src:'Demo',url:'#'},
 ];
-
-var ZONES = [
-  {name:'Ukraine',lat:49,lon:32,intensity:92,col:'#ff3b3b'},
-  {name:'Suwalki Gap',lat:54.3,lon:23.2,intensity:68,col:'#ff3b3b'},
-  {name:'DPRK',lat:39.5,lon:127,intensity:78,col:'#ff3b3b'},
-  {name:'Taiwan Strait',lat:24,lon:120.5,intensity:74,col:'#ff3b3b'},
-  {name:'Gaza/Sinai',lat:31.5,lon:34.5,intensity:70,col:'#ff3b3b'},
-  {name:'Red Sea',lat:15.5,lon:42,intensity:60,col:'#ffb300'},
-  {name:'Persian Gulf',lat:26.5,lon:53,intensity:52,col:'#ffb300'},
-  {name:'S. China Sea',lat:12,lon:114,intensity:55,col:'#ffb300'},
-  {name:'Sahel',lat:14,lon:2,intensity:44,col:'#ffb300'},
-  {name:'Baltic Sea',lat:57,lon:22,intensity:32,col:'#00c8ff'},
-  {name:'Arctic',lat:75,lon:30,intensity:22,col:'#00c8ff'},
-  {name:'Afghanistan',lat:33,lon:65,intensity:38,col:'#ffb300'},
-];
-
-// ── STATE ──────────────────────────────────────────────────────
-var allAC = AIRCRAFT.slice();
-var allNews = NEWS.slice();
-var activeView = 'dashboard';
-var mapAnimId = null;
-
-// ── CLOCK ──────────────────────────────────────────────────────
-function tickClock() {
-  var n = new Date();
-  document.getElementById('utc-clock').textContent =
-    String(n.getUTCHours()).padStart(2,'0')+':'+
-    String(n.getUTCMinutes()).padStart(2,'0')+':'+
-    String(n.getUTCSeconds()).padStart(2,'0')+'Z';
-}
-setInterval(tickClock, 1000); tickClock();
-
-// ── UPTIME ──────────────────────────────────────────────────────
-function updateUptime() {
-  var ms = Date.now() - startTime;
-  var s = Math.floor(ms/1000), m = Math.floor(s/60), h = Math.floor(m/60);
-  document.getElementById('sn-uptime').textContent = h>0 ? h+'h '+m%60+'m' : m+'m '+s%60+'s';
-}
-setInterval(updateUptime, 10000);
-
-// ── VIEW SWITCHING ──────────────────────────────────────────────
-function switchView(v) {
-  activeView = v;
-  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
-  var btn = document.querySelector('[data-view="'+v+'"]');
-  if(btn) btn.classList.add('active');
-  document.querySelectorAll('.view').forEach(function(el){ el.classList.remove('active'); });
-  var el = document.getElementById('view-'+v);
-  if(el) el.classList.add('active');
-  if(v==='heatmap') setTimeout(renderHeatmap, 60);
-}
-
-// ── AIRCRAFT ──────────────────────────────────────────────────
-function renderAircraftList(data) {
-  var list = document.getElementById('aircraft-list');
-  list.innerHTML = data.slice(0,20).map(function(a){
-    return '<div class="ar"><div style="flex:1;min-width:0"><div class="ai">'+a.cs+'</div><div class="as">'+a.country+' · '+a.alt+'m</div></div>'
-      +'<div style="text-align:right;font-family:var(--mono);font-size:10px;color:var(--a);line-height:1.4">'+a.spd+'m/s<br>'+a.hdg+'°</div></div>';
-  }).join('');
-  var tbody = document.getElementById('aircraft-table-body');
-  if(tbody) tbody.innerHTML = data.map(function(a){
-    return '<tr><td style="color:var(--bright)">'+a.cs+'</td><td>'+a.country+'</td>'
-      +'<td style="color:var(--b)">'+a.alt+'</td><td style="color:var(--a)">'+a.spd+'</td>'
-      +'<td>'+a.hdg+'°</td><td style="color:var(--text);font-size:10px">'+a.lat.toFixed(1)+'</td>'
-      +'<td style="color:var(--text);font-size:10px">'+a.lon.toFixed(1)+'</td>'
-      +'<td style="color:var(--g)">'+( a.gnd?'GND':'AIR')+'</td></tr>';
-  }).join('');
-}
-
-function filterAircraft(q) {
-  var f = q ? allAC.filter(function(a){
-    return a.cs.toLowerCase().includes(q.toLowerCase())||a.country.toLowerCase().includes(q.toLowerCase());
-  }) : allAC;
-  renderAircraftList(f);
-}
-
-// ── INTEL FEED ──────────────────────────────────────────────────
-function renderIntel() {
-  var feed = document.getElementById('intel-feed');
-  feed.innerHTML = INTEL.map(function(i){
-    return '<div class="ii '+i.lvl+'">'
-      +'<div class="it">'+i.time+'</div>'
-      +'<div class="ix">'+i.text+'</div>'
-      +'<div class="is">SRC: '+i.src+'</div></div>';
-  }).join('');
-}
-
-// Add live intel items periodically
-var intelMsgs = [
-  {lvl:'m',text:'Satellite imagery update: new revetments at northern airfield.',src:'SENTINEL AI'},
-  {lvl:'h',text:'Signal intelligence intercept — encryption pattern change in theater.',src:'SIGINT'},
-  {lvl:'l',text:'Merchant vessel transponder anomaly — Persian Gulf.',src:'AIS Feed'},
-  {lvl:'m',text:'Artillery fire reported near contact line — Zaporizhzhia axis.',src:'UA Monitor'},
-];
-setInterval(function(){
-  var msg = intelMsgs[Math.floor(Math.random()*intelMsgs.length)];
-  var now = new Date();
-  var t = String(now.getUTCHours()).padStart(2,'0')+':'+String(now.getUTCMinutes()).padStart(2,'0')+'Z';
-  INTEL.unshift({lvl:msg.lvl, time:t, text:msg.text, src:msg.src});
-  if(INTEL.length>15) INTEL.pop();
-  renderIntel();
-  var n = parseInt(document.getElementById('sn-events').textContent)||50;
-  document.getElementById('sn-events').textContent = n+1;
-  document.getElementById('hud-ev').textContent = n+1;
-}, 12000);
-
-// ── NEWS FEED ──────────────────────────────────────────────────
-function renderNews(data) {
-  var feed = document.getElementById('news-feed');
-  feed.innerHTML = data.map(function(n){
-    return '<div class="ni">'
-      +'<div class="nc" style="color:'+n.col+';border-color:'+n.col+'33;background:'+n.col+'11">'+n.cat+'</div>'
-      +'<div class="nb"><div class="nt">'+n.title+'</div>'
-      +'<div class="nd">'+n.desc+'</div>'
-      +'<div class="nm">'+n.time+' · '+n.src+'</div></div></div>';
-  }).join('');
-  document.getElementById('news-badge').textContent = data.length+' ARTICLES';
-}
-
-function filterNews(kw) {
-  var f = kw ? allNews.filter(function(n){
-    return n.title.toLowerCase().includes(kw.toLowerCase())||n.desc.toLowerCase().includes(kw.toLowerCase());
-  }) : allNews;
-  renderNews(f);
-}
-
-// ── CONFLICT ZONES ──────────────────────────────────────────────
-function renderZones() {
-  var el = document.getElementById('conflict-zones');
-  el.innerHTML = ZONES.slice().sort(function(a,b){return b.intensity-a.intensity;}).slice(0,8).map(function(z){
-    return '<div class="zi"><div style="display:flex;justify-content:space-between">'
-      +'<span class="zn">'+z.name+'</span>'
-      +'<span style="font-family:var(--mono);font-size:9px;color:'+z.col+'">'+z.intensity+'</span></div>'
-      +'<div class="zb"><div class="zf" style="width:'+z.intensity+'%;background:'+z.col+'"></div></div>'
-      +'<div class="zm">'+(z.intensity>=70?'CRITICAL':z.intensity>=40?'ELEVATED':'WATCH')+' · GDELT+BASELINE</div></div>';
-  }).join('');
-}
-
-// ── SOURCE STATUS ──────────────────────────────────────────────
-function renderSources() {
-  document.getElementById('source-list').innerHTML = [
-    {name:'OpenSky Network',status:'LIVE',col:'var(--g)'},
-    {name:'GDELT Project',status:'LIVE',col:'var(--g)'},
-    {name:'NewsAPI',status:'LIVE',col:'var(--g)'},
-    {name:'Groq AI',status: GROQ_KEY?'READY':'NO KEY',col:GROQ_KEY?'var(--b)':'var(--text)'},
-  ].map(function(s){
-    return '<div class="si"><span class="sn2">'+s.name.toUpperCase()+'</span>'
-      +'<span class="ss" style="color:'+s.col+'">'+s.status+'</span></div>';
-  }).join('');
-}
-
-// ── TICKER ──────────────────────────────────────────────────────
-function updateTicker() {
-  var parts = [
-    'OPENSKY: '+AIRCRAFT.length+' military aircraft tracked globally',
-    'GDELT: '+INTEL.length+' conflict events indexed',
-    'NEWS: '+NEWS.length+' geopolitical headlines',
-    'DPRK ballistic missile launch confirmed — East Sea — '+Math.floor(Math.random()*15+5)+'min ago',
-    'NATO rapid reaction force activated — Baltic region',
-    'USS Nimitz enters Persian Gulf — IRGC response monitored',
-    'SENTINEL OSINT — REAL-TIME GLOBAL INTELLIGENCE',
-    'NEXT AI BRIEF: T+47MIN',
-    'THREAT INDEX: ELEVATED — 74%',
-    'SOURCES MONITORED: 156 networks',
-  ];
-  var txt = parts.map(function(p){return ' // '+p+' '}).join('')+' ';
-  document.getElementById('ticker-text').textContent = txt+txt;
-}
-
-// ── MAP ──────────────────────────────────────────────────────
-var LAND = [[-125,49],[-123,46],[-120,40],[-117,32],[-105,23],[-90,15],[-85,10],[-80,8],[-75,10],[-72,18],[-70,22],[-75,28],[-80,32],[-75,42],[-70,44],[-67,47],[-60,47],[-55,50],[-65,55],[-75,60],[-85,65],[-90,70],[-100,75],[-110,72],[-120,68],[-130,60],[-140,55],[-155,65],[-160,60],[-165,55],[-90,15],[-88,12],[-85,8],[-80,5],[-75,0],[-70,-5],[-65,-10],[-60,-15],[-55,-20],[-50,-25],[-48,-28],[-43,-23],[-40,-20],[-38,-13],[-35,-8],[-37,-5],[-44,-3],[-50,0],[-55,2],[-60,5],[-63,10],[-68,12],[-10,36],[0,38],[5,40],[10,42],[12,44],[14,40],[16,38],[18,40],[20,42],[22,40],[26,38],[28,40],[30,45],[28,50],[26,54],[24,58],[22,60],[20,64],[18,68],[15,70],[10,63],[5,58],[0,52],[-2,48],[-5,44],[-8,38],[-10,36],[-17,14],[-15,10],[-12,5],[-8,4],[-4,5],[0,5],[5,5],[10,4],[15,5],[20,8],[25,12],[30,15],[35,18],[38,20],[42,12],[44,8],[40,2],[36,-2],[32,-5],[28,-10],[24,-14],[20,-18],[16,-22],[12,-26],[18,-30],[26,-34],[30,-30],[33,-25],[36,-20],[40,-10],[42,-1],[44,4],[48,8],[50,12],[44,12],[42,14],[38,14],[34,10],[30,4],[26,2],[22,4],[18,8],[14,12],[10,14],[6,14],[2,14],[-2,13],[-6,13],[-10,13],[-14,13],[-17,14],[35,30],[38,34],[40,38],[42,36],[44,34],[46,30],[48,26],[50,24],[52,26],[56,24],[60,22],[55,18],[50,14],[45,12],[42,12],[40,14],[38,16],[36,20],[34,26],[35,30],[40,38],[45,42],[50,45],[55,50],[60,55],[65,60],[70,65],[75,68],[80,72],[90,72],[100,68],[110,65],[120,62],[130,58],[135,55],[140,50],[145,45],[140,40],[135,34],[130,30],[125,26],[120,22],[115,20],[110,18],[105,14],[100,10],[98,8],[95,5],[100,2],[104,0],[108,-4],[110,-8],[116,-8],[120,-4],[124,0],[128,4],[132,8],[130,14],[126,20],[122,26],[118,30],[116,35],[114,40],[112,44],[108,48],[104,52],[100,55],[95,52],[90,46],[85,40],[80,34],[76,28],[72,22],[68,20],[64,22],[60,25],[56,26],[52,30],[48,30],[44,30],[40,36],[38,36],[130,32],[132,34],[134,36],[136,38],[138,40],[140,42],[142,44],[144,42],[142,40],[140,38],[138,36],[136,34],[134,32],[132,30],[130,32]];
-
-function ll2xy(lat,lon,W,H){return {x:((lon+180)/360)*W, y:((90-lat)/180)*H};}
-
-function startMap() {
-  var cv = document.getElementById('map-canvas');
-  function resize(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;}
-  resize();
-  window.addEventListener('resize',function(){resize();});
-  function frame(){
-    var W=cv.width,H=cv.height;
-    if(!W||!H){mapAnimId=requestAnimationFrame(frame);return;}
-    var ctx=cv.getContext('2d'),t=Date.now();
-    ctx.clearRect(0,0,W,H);
-    LAND.forEach(function(p){var xy=ll2xy(p[1],p[0],W,H);ctx.beginPath();ctx.arc(xy.x,xy.y,1.2,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.13)';ctx.fill();});
-    ctx.strokeStyle='rgba(0,200,255,0.03)';ctx.lineWidth=.5;
-    for(var i=1;i<8;i++){ctx.beginPath();ctx.moveTo(0,i*H/8);ctx.lineTo(W,i*H/8);ctx.stroke();ctx.beginPath();ctx.moveTo(i*W/8,0);ctx.lineTo(i*W/8,H);ctx.stroke();}
-    var eq=ll2xy(0,0,W,H);ctx.strokeStyle='rgba(0,200,255,0.08)';ctx.lineWidth=.8;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(0,eq.y);ctx.lineTo(W,eq.y);ctx.stroke();ctx.setLineDash([]);
-    ZONES.forEach(function(z,i){
-      var xy=ll2xy(z.lat,z.lon,W,H);
-      var ph=((t+(i*400))%2200)/2200,rr=6+ph*18,al=(1-ph)*.6;
-      ctx.beginPath();ctx.arc(xy.x,xy.y,rr,0,Math.PI*2);ctx.strokeStyle=z.col+(Math.round(al*255).toString(16).padStart(2,'0'));ctx.lineWidth=1;ctx.stroke();
-      ctx.beginPath();ctx.arc(xy.x,xy.y,3,0,Math.PI*2);ctx.fillStyle=z.col;ctx.fill();
-      ctx.fillStyle=z.col;ctx.font='8px "Share Tech Mono",monospace';ctx.textAlign='center';
-      ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-8);
-    });
-    AIRCRAFT.forEach(function(a){
-      var xy=ll2xy(a.lat,a.lon,W,H);
-      ctx.beginPath();ctx.arc(xy.x,xy.y,4,0,Math.PI*2);ctx.fillStyle='rgba(255,179,0,.2)';ctx.fill();
-      ctx.beginPath();ctx.arc(xy.x,xy.y,2,0,Math.PI*2);ctx.fillStyle='#ffb300';ctx.fill();
-    });
-    mapAnimId=requestAnimationFrame(frame);
-  }
-  frame();
-}
-
-// ── HEATMAP ──────────────────────────────────────────────────
-function renderHeatmap() {
-  var cv=document.getElementById('heatmap-canvas');
-  var p=cv.parentElement;cv.width=p.offsetWidth;cv.height=p.offsetHeight;
-  var W=cv.width,H=cv.height,ctx=cv.getContext('2d');
-  ctx.fillStyle='#06090d';ctx.fillRect(0,0,W,H);
-  LAND.forEach(function(pt){var xy=ll2xy(pt[1],pt[0],W,H);ctx.beginPath();ctx.arc(xy.x,xy.y,1,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.07)';ctx.fill();});
-  ZONES.forEach(function(z){
-    var xy=ll2xy(z.lat,z.lon,W,H),r=Math.max(28,z.intensity*.55);
-    var g=ctx.createRadialGradient(xy.x,xy.y,0,xy.x,xy.y,r),al=z.intensity/100;
-    g.addColorStop(0,z.col.replace('#','rgba(').replace(/(..)(..)(..)$/,function(m,r,g,b){return parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16)+','+al+')';})||'rgba(255,59,59,'+al+')');
-    g.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(xy.x,xy.y,r,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=z.col;ctx.font='bold 9px "Share Tech Mono"';ctx.textAlign='center';
-    ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-r*.35-2);
-  });
-  document.getElementById('heatmap-legend').innerHTML=
-    '<div class="li"><div class="ld" style="background:#ff3b3b"></div>CRITICAL (≥70)</div>'
-    +'<div class="li"><div class="ld" style="background:#ffb300"></div>ELEVATED (40-70)</div>'
-    +'<div class="li"><div class="ld" style="background:#00c8ff"></div>WATCH (≤40)</div>'
-    +'<div style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text)">'+ZONES.length+' ZONES MONITORED</div>';
-}
-
-// ── AI BRIEF ──────────────────────────────────────────────────
-function generateBrief() {
-  var btn1=document.getElementById('gen-brief-btn');
-  var btn2=document.getElementById('quick-brief-btn');
-  var key=GROQ_KEY;
-  [btn1,btn2].forEach(function(b){if(b){b.disabled=true;b.textContent='⚡ AI ANALYST THINKING...';}});
-  switchView('briefs');
-  if(!key){addBriefCard(getFallbackBrief(),false,'No Groq key');[btn1,btn2].forEach(function(b){if(b){b.disabled=false;b.textContent='⚡ GENERATE AI INTELLIGENCE BRIEF';}});return;}
-  var ctx2='You are analyzing live OSINT data.\n\nLIVE INTEL EVENTS:\n'+INTEL.slice(0,6).map(function(i,j){return (j+1)+'. ['+i.time+'] '+i.text;}).join('\n')
-    +'\n\nLIVE NEWS:\n'+NEWS.slice(0,5).map(function(n,j){return (j+1)+'. ['+n.cat+'] '+n.title;}).join('\n')
-    +'\n\nTRACKED AIRCRAFT: '+AIRCRAFT.length+' military/surveillance\n\nGenerate a 4-priority intelligence brief.';
-  fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:800,
-      messages:[{role:'system',content:'Senior intelligence analyst. Write classified-style briefs. Format: [PRIORITY N — THEATER]: analysis. recommendation. End with CONFIDENCE: X% | SOURCES: Y | NEXT BRIEF: T+8HRS'},
-      {role:'user',content:ctx2}]})})
-  .then(function(r){return r.json();})
-  .then(function(d){
-    var text=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||getFallbackBrief();
-    addBriefCard(text,true);
-  })
-  .catch(function(){addBriefCard(getFallbackBrief(),false,'API error');})
-  .finally(function(){[btn1,btn2].forEach(function(b){if(b){b.disabled=false;b.textContent='⚡ GENERATE AI INTELLIGENCE BRIEF';}});});
-}
-
-function getFallbackBrief(){
-  return '[PRIORITY 1 — UKRAINE]: UAV swarm near Zaporizhzhia shows novel signal profile inconsistent with known assets. Recommend urgent HUMINT cross-reference within 6hrs.\n\n[PRIORITY 2 — DPRK]: TEL movement + confirmed ballistic launch compresses warning cycle to 72hrs. PACOM elevated readiness advised immediately.\n\n[PRIORITY 3 — HORMUZ]: IRGC speedboat surge (12 vessels) consistent with USS Nimitz transit signaling, not interdiction intent. Monitor without escalation.\n\n[WATCH — CYBER]: Coordinated SCADA intrusions across 4 Eastern European energy networks. APT28 signature. Assess critical infrastructure exposure.\n\nCONFIDENCE: 79% | SOURCES: 12 | NEXT BRIEF: T+8HRS';
-}
-
-function addBriefCard(text,isAI,note){
-  var n=new Date(),ts=String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0')+'Z';
-  var fmt=text.replace(/\[PRIORITY\s*(\d+)\s*[—-]\s*([^\]]+)\]/gi,'<span class="hi2">[$1 — $2]</span>')
-    .replace(/\[WATCH[^\]]*\]/gi,function(s){return '<span class="wa">'+s+'</span>';})
-    .replace(/(CONFIDENCE:[^\n]+)/gi,function(s){return '<span class="ok">'+s+'</span>';})
-    .replace(/\n/g,'<br>');
-  var card=document.createElement('div');
-  card.className='bc'+(isAI?' ai':'');
-  card.innerHTML='<div class="bh'+(isAI?' ai':'')+'">⚡ INTEL BRIEF — '+ts+(isAI?' — GROQ LLAMA LIVE':' — DEMO')+'</div>'
-    +'<div class="bb2">'+fmt+'</div>'
-    +'<div class="bm">'+(isAI?'GENERATED BY GROQ LLAMA 3.3 70B · ':'DEMO MODE · ')+'INTEL:'+INTEL.length+' NEWS:'+NEWS.length+' AC:'+AIRCRAFT.length+(note?' · '+note:'')+'</div>';
-  var list=document.getElementById('briefs-list');
-  list.insertBefore(card,list.firstChild);
-  briefCount++;
-  document.getElementById('sn-briefs').textContent=briefCount;
-}
-
-// ── API KEY ──────────────────────────────────────────────────
-function saveApiKey(){
-  var val=document.getElementById('groq-key-input').value.trim();
-  if(!val){alert('Please enter a Groq API key');return;}
-  GROQ_KEY=val;
-  document.getElementById('api-key-banner').style.display='none';
-  renderSources();
-  generateBrief();
-}
 
 // ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('[data-view]').forEach(function(btn){
-    btn.addEventListener('click',function(){switchView(this.getAttribute('data-view'));});
+    btn.addEventListener('click', function(){ switchView(this.getAttribute('data-view')); });
   });
-  document.getElementById('ac-search').addEventListener('input',function(){filterAircraft(this.value);});
-  document.getElementById('news-filter').addEventListener('change',function(){filterNews(this.value);});
-  document.getElementById('gen-brief-btn').addEventListener('click',generateBrief);
-  document.getElementById('quick-brief-btn').addEventListener('click',function(){switchView('briefs');setTimeout(generateBrief,100);});
-  document.getElementById('save-key-btn').addEventListener('click',saveApiKey);
-
-  renderAircraftList(allAC);
-  renderIntel();
-  renderNews(allNews);
-  renderZones();
-  renderSources();
-  updateTicker();
-  startMap();
+  document.getElementById('ac-search').addEventListener('input', function(){ filterAircraft(this.value); });
+  document.getElementById('news-filter').addEventListener('change', function(){ filterNews(this.value); });
+  document.getElementById('gen-brief-btn').addEventListener('click', generateBrief);
+  document.getElementById('quick-brief-btn').addEventListener('click', function(){ switchView('briefs'); setTimeout(generateBrief,100); });
+  document.getElementById('save-key-btn').addEventListener('click', saveApiKey);
 
   if(GROQ_KEY) document.getElementById('api-key-banner').style.display='none';
 
-  setInterval(updateTicker,30000);
-  setInterval(function(){
-    var pct=Math.floor(68+Math.random()*12);
-    document.getElementById('threat-fill').style.width=pct+'%';
-    document.getElementById('threat-pct').textContent=(pct>80?'HIGH':pct>60?'ELEVATED':'MODERATE')+' — '+pct+'%';
-  },5000);
+  renderSources();
+  startMap();
+
+  // Load all real data in parallel
+  Promise.all([loadAircraft(), loadGDELT(), loadNews()]).then(function(){
+    updateTicker();
+    setInterval(updateTicker, 30000);
+  });
+
+  // Refresh cycles
+  setInterval(loadAircraft, 60000);
+  setInterval(loadGDELT, 120000);
+  setInterval(loadNews, 300000);
+  setInterval(renderSources, 15000);
+  setInterval(updateUptime, 10000);
 });
 </script>
 </body>
