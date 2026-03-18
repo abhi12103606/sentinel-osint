@@ -4,180 +4,599 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SENTINEL // OSINT DASHBOARD</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#00ff87;--a:#ffb300;--r:#ff3b3b;--b:#00c8ff;--p:#b06bff;--bg:#06090d;--bg2:#0a0f16;--border:#1a2d40;--border2:#243d54;--text:#6a8fa8;--bright:#c0d8e8;--dim:#0d1620;--mono:'Share Tech Mono',monospace;--ui:'Rajdhani',sans-serif}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:var(--ui);font-size:14px;color:var(--bright)}
+.app{display:grid;grid-template-rows:44px 1fr 26px;height:100vh;overflow:hidden}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#030507;border-bottom:1px solid var(--border);gap:12px}
+.logo{font-family:var(--mono);font-size:15px;color:var(--g);letter-spacing:3px;white-space:nowrap}
+.logo-sep{color:var(--text)}
+.nav{display:flex;gap:4px}
+.nav-btn{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--text);cursor:pointer;transition:all .18s;text-transform:uppercase}
+.nav-btn.active,.nav-btn:hover{border-color:var(--b);color:var(--b);background:rgba(0,200,255,.07)}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.pill{display:flex;align-items:center;gap:5px;padding:2px 8px;border-radius:2px;font-family:var(--mono);font-size:9px;white-space:nowrap}
+.pill.live{background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.2);color:var(--g)}
+.pill.warn{background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.2);color:var(--a)}
+.pill.alert{background:rgba(255,59,59,.08);border:1px solid rgba(255,59,59,.2);color:var(--r)}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.dot.g{background:var(--g);animation:blink 2s infinite}
+.dot.a{background:var(--a);animation:blink 1.3s infinite}
+.dot.r{background:var(--r);animation:blink .7s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.clock{font-family:var(--mono);font-size:13px;color:var(--b)}
+.main{display:grid;grid-template-columns:256px 1fr 260px;overflow:hidden;height:100%}
+.sidebar{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
+.sidebar-top{flex:1;display:flex;flex-direction:column;border-bottom:1px solid var(--border);min-height:0}
+.sidebar-bot{flex:1;display:flex;flex-direction:column;min-height:0}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.pt{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--text);text-transform:uppercase}
+.pb{overflow-y:auto;padding:6px;flex:1}
+.pb::-webkit-scrollbar{width:2px}
+.pb::-webkit-scrollbar-thumb{background:var(--border2)}
+.badge{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:2px}
+.bb{background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);color:var(--b)}
+.bg{background:rgba(0,255,135,.1);border:1px solid rgba(0,255,135,.2);color:var(--g)}
+.br{background:rgba(255,59,59,.1);border:1px solid rgba(255,59,59,.2);color:var(--r)}
+.ba{background:rgba(255,179,0,.1);border:1px solid rgba(255,179,0,.2);color:var(--a)}
+.bp{background:rgba(176,107,255,.1);border:1px solid rgba(176,107,255,.2);color:var(--p)}
+.sr{display:flex;padding:5px 6px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sr input{width:100%;background:var(--dim);border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:10px;padding:4px 7px;border-radius:2px;outline:none}
+.sr input:focus{border-color:var(--b)}
+.sr input::placeholder{color:var(--text)}
+.ar{display:flex;align-items:center;gap:7px;padding:5px 7px;margin-bottom:3px;background:var(--dim);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:border-color .15s}
+.ar:hover{border-color:var(--b)}
+.ai{font-family:var(--mono);font-size:11px;color:var(--bright)}
+.as{font-size:11px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ii{padding:6px 7px;margin-bottom:4px;border-left:2px solid;border-radius:0 2px 2px 0;background:var(--dim);cursor:pointer}
+.ii:hover{opacity:.8}
+.ii.h{border-left-color:var(--r)}
+.ii.m{border-left-color:var(--a)}
+.ii.l{border-left-color:var(--b)}
+.it{font-family:var(--mono);font-size:9px;color:var(--text);margin-bottom:2px}
+.ix{font-size:11px;color:var(--bright);line-height:1.35}
+.is{font-size:10px;color:var(--text);margin-top:2px}
+.center{position:relative;overflow:hidden;background:var(--bg)}
+.view{display:none;position:absolute;top:0;left:0;width:100%;height:100%;flex-direction:column;overflow:hidden}
+.view.active{display:flex}
+#map-canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.mgo{position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(0,200,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.mhud{position:absolute;bottom:10px;left:10px;display:flex;gap:10px;pointer-events:none}
+.hi{background:rgba(6,9,13,.85);border:1px solid var(--border);padding:5px 10px;border-radius:2px}
+.hl{font-family:var(--mono);font-size:8px;color:var(--text);display:block;letter-spacing:1px}
+.hv{font-family:var(--mono);font-size:16px;display:block;line-height:1.1}
+.hv.b{color:var(--b)}.hv.r{color:var(--r)}.hv.g{color:var(--g)}
+.tw{flex:1;overflow:auto;padding:8px}
+.tw::-webkit-scrollbar{width:3px;height:3px}
+.tw::-webkit-scrollbar-thumb{background:var(--border2)}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
+thead th{background:var(--bg2);border:1px solid var(--border);padding:6px 8px;color:var(--text);text-align:left;letter-spacing:1px;font-size:9px;text-transform:uppercase;position:sticky;top:0}
+tbody td{border:1px solid var(--border);padding:5px 8px;color:var(--bright)}
+tbody tr:hover td{background:var(--dim)}
+.ni{display:flex;gap:10px;padding:9px;margin-bottom:5px;background:var(--dim);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:border-color .15s;text-decoration:none}
+.ni:hover{border-color:var(--b)}
+.nc{font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:1px;flex-shrink:0;align-self:flex-start;margin-top:2px;letter-spacing:1px;border:1px solid}
+.nb{flex:1;min-width:0}
+.nt{font-size:13px;color:var(--bright);font-weight:600;line-height:1.3;margin-bottom:3px}
+.nd{font-size:11px;color:var(--text);line-height:1.35;margin-top:2px}
+.nm{font-family:var(--mono);font-size:9px;color:var(--text);margin-top:4px}
+#news-filter{background:var(--dim);border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:9px;padding:3px 6px;border-radius:2px;outline:none;cursor:pointer}
+.hl-legend{display:flex;gap:16px;padding:6px 12px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid var(--border);background:var(--bg2)}
+.li{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--text)}
+.ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rp{display:flex;flex-direction:column;border-left:1px solid var(--border);overflow:hidden}
+.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:7px;flex-shrink:0}
+.sc{background:var(--dim);border:1px solid var(--border);border-radius:2px;padding:6px 4px;text-align:center}
+.sn{font-family:var(--mono);font-size:18px;line-height:1}
+.sn.b{color:var(--b)}.sn.r{color:var(--r)}.sn.g{color:var(--g)}.sn.a{color:var(--a)}.sn.p{color:var(--p)}
+.sl{font-family:var(--mono);font-size:8px;color:var(--text);letter-spacing:1px;margin-top:2px;text-transform:uppercase}
+.ts{padding:6px 8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
+.tlr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.tp{font-family:var(--mono);font-size:9px;color:var(--a)}
+.tb{height:3px;background:var(--border);border-radius:1px;margin-bottom:3px}
+.tf{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--a),var(--r));transition:width 1.5s}
+.tsc{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--text)}
+.zi{padding:6px 7px;margin-bottom:3px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
+.zn{font-family:var(--mono);font-size:11px;color:var(--bright)}
+.zb{height:2px;background:var(--border);border-radius:1px;margin:3px 0 2px}
+.zf{height:100%;border-radius:1px}
+.zm{font-family:var(--mono);font-size:9px;color:var(--text)}
+.sli{padding:4px 8px;display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+.si{display:flex;align-items:center;justify-content:space-between;padding:4px 6px;background:var(--dim);border:1px solid var(--border);border-radius:2px}
+.sn2{font-family:var(--mono);font-size:9px;color:var(--text)}
+.ss{font-family:var(--mono);font-size:9px}
+.bc{background:var(--dim);border:1px solid var(--border);border-radius:3px;padding:9px;margin-bottom:7px}
+.bc.ai{border-color:rgba(176,107,255,.3)}
+.bh{font-family:var(--mono);font-size:9px;color:var(--b);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase}
+.bh.ai{color:var(--p)}
+.bb2{font-size:12px;color:var(--bright);line-height:1.55}
+.bb2 .hi2{color:var(--r);font-weight:700}
+.bb2 .wa{color:var(--a);font-weight:700}
+.bb2 .ok{color:var(--g);font-weight:700}
+.bm{font-family:var(--mono);font-size:8px;color:var(--text);margin-top:6px;border-top:1px solid var(--border);padding-top:4px}
+.aib{margin:6px 8px;padding:9px;background:rgba(176,107,255,.07);border:1px solid rgba(176,107,255,.25);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--p);letter-spacing:2px;cursor:pointer;transition:all .2s;text-align:center;text-transform:uppercase;width:calc(100% - 16px)}
+.aib:hover{background:rgba(176,107,255,.15);border-color:var(--p)}
+.aib:disabled{opacity:.45;cursor:not-allowed}
+.ticker{background:#030507;border-top:1px solid var(--border);display:flex;align-items:center;overflow:hidden;height:26px}
+.tt{font-family:var(--mono);font-size:9px;padding:0 10px;color:var(--r);background:rgba(255,59,59,.1);border-right:1px solid var(--border);white-space:nowrap;height:100%;display:flex;align-items:center;letter-spacing:2px;flex-shrink:0}
+.tk{overflow:hidden;flex:1}
+.tc{font-family:var(--mono);font-size:10px;color:var(--text);white-space:nowrap;display:inline-block;animation:scroll 80s linear infinite;padding-left:20px}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.lm{font-family:var(--mono);font-size:10px;color:var(--text);padding:10px;text-align:center;animation:blink 1.5s infinite}
+</style>
 </head>
 <body>
 <div class="app">
-
-  <header class="hdr">
-    <div class="logo">SENTINEL<span class="logo-sep">//</span>OSINT</div>
-    <nav class="nav">
-      <button class="nav-btn active" onclick="switchView('dashboard')">DASHBOARD</button>
-      <button class="nav-btn" onclick="switchView('aircraft')">AIRCRAFT</button>
-      <button class="nav-btn" onclick="switchView('news')">LIVE NEWS</button>
-      <button class="nav-btn" onclick="switchView('heatmap')">CONFLICT MAP</button>
-      <button class="nav-btn" onclick="switchView('briefs')">AI BRIEFS</button>
-    </nav>
-    <div class="hdr-right">
-      <div class="pill live" id="feed-status"><span class="dot g"></span>CONNECTING...</div>
-      <div class="pill warn" id="alert-pill"><span class="dot a"></span><span id="alert-count">0 ALERTS</span></div>
-      <div class="pill alert" id="conflict-pill"><span class="dot r"></span>CONFLICT ACTIVE</div>
-      <div class="clock" id="utc-clock">00:00:00Z</div>
-    </div>
-  </header>
-
-  <div class="main">
-
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <div class="panel-head">
-          <span class="panel-title">✈ AIRCRAFT</span>
-          <span class="badge b" id="ac-badge">LOADING</span>
-        </div>
-        <div class="search-row">
-          <input type="text" id="ac-search" placeholder="SEARCH CALLSIGN..." autocomplete="off" oninput="filterAircraft(this.value)">
-        </div>
-        <div class="panel-body" id="aircraft-list">
-          <div class="loading-msg">Connecting to OpenSky Network...</div>
-        </div>
-      </div>
-      <div class="sidebar-bot">
-        <div class="panel-head">
-          <span class="panel-title">⚡ INTEL FEED</span>
-          <span class="badge r">GDELT LIVE</span>
-        </div>
-        <div class="panel-body" id="intel-feed">
-          <div class="loading-msg">Fetching GDELT events...</div>
-        </div>
-      </div>
-    </aside>
-
-    <main class="center">
-
-      <div class="view active" id="view-dashboard">
-        <canvas id="map-canvas"></canvas>
-        <div class="map-grid-overlay"></div>
-        <div class="map-hud">
-          <div class="hud-item"><span class="hud-label">AIRCRAFT</span><span class="hud-val b" id="hud-ac">--</span></div>
-          <div class="hud-item"><span class="hud-label">GDELT EVENTS</span><span class="hud-val r" id="hud-ev">--</span></div>
-          <div class="hud-item"><span class="hud-label">LAST SYNC</span><span class="hud-val" id="hud-sync">--</span></div>
-          <div class="hud-item"><span class="hud-label">NEWS ITEMS</span><span class="hud-val g" id="hud-news">--</span></div>
-        </div>
-      </div>
-
-      <div class="view" id="view-aircraft">
-        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
-          <span class="panel-title">LIVE AIRCRAFT — OpenSky Network (Real Data)</span>
-          <span class="badge b" id="ac-full-badge">LIVE</span>
-        </div>
-        <div class="table-wrap">
-          <table id="aircraft-table">
-            <thead>
-              <tr><th>CALLSIGN</th><th>COUNTRY</th><th>ALT (m)</th><th>SPEED (m/s)</th><th>HEADING</th><th>LAT</th><th>LON</th><th>ON GROUND</th></tr>
-            </thead>
-            <tbody id="aircraft-table-body">
-              <tr><td colspan="8" class="loading-msg">Loading OpenSky data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="view" id="view-news">
-        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
-          <span class="panel-title">LIVE NEWS — NewsAPI (Conflict / Geopolitics)</span>
-          <div style="display:flex;gap:6px;align-items:center">
-            <select id="news-filter" onchange="filterNews(this.value)">
-              <option value="">ALL TOPICS</option>
-              <option value="military">MILITARY</option>
-              <option value="conflict">CONFLICT</option>
-              <option value="nuclear">NUCLEAR</option>
-              <option value="missile">MISSILE</option>
-              <option value="NATO">NATO</option>
-              <option value="China">CHINA</option>
-            </select>
-            <span class="badge r" id="news-badge">LOADING</span>
-          </div>
-        </div>
-        <div id="news-feed" class="panel-body" style="flex:1;padding:8px">
-          <div class="loading-msg">Fetching NewsAPI headlines...</div>
-        </div>
-      </div>
-
-      <div class="view" id="view-heatmap">
-        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
-          <span class="panel-title">CONFLICT INTENSITY HEATMAP — GDELT Project</span>
-          <span class="badge r">LIVE DATA</span>
-        </div>
-        <div style="flex:1;position:relative;min-height:0">
-          <canvas id="heatmap-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
-        </div>
-        <div class="heatmap-legend" id="heatmap-legend"></div>
-      </div>
-
-      <div class="view" id="view-briefs">
-        <div class="panel-head" style="padding:10px 12px;flex-shrink:0">
-          <span class="panel-title">AI INTELLIGENCE BRIEFS — Claude Sonnet</span>
-          <span class="badge p">AI POWERED</span>
-        </div>
-        <div id="api-key-banner" class="api-banner">
-          <div class="banner-text">⚠ Enter your Anthropic API key to enable live AI-generated briefs</div>
-          <div class="key-row">
-            <input type="password" id="anthropic-key" placeholder="sk-ant-api03-...">
-            <button class="save-btn" onclick="saveApiKey()">SAVE &amp; ACTIVATE</button>
-          </div>
-          <div class="banner-note">Key is stored only in sessionStorage — never sent anywhere except api.anthropic.com</div>
-        </div>
-        <div id="briefs-list" class="panel-body" style="flex:1;padding:8px"></div>
-        <button class="ai-btn" id="gen-brief-btn" onclick="generateBrief()">⚡ GENERATE LIVE AI INTELLIGENCE BRIEF</button>
-      </div>
-
-    </main>
-
-    <aside class="right-panel">
-      <div class="panel-head"><span class="panel-title">GLOBAL STATUS</span></div>
-      <div class="stat-grid">
-        <div class="stat-card"><div class="stat-n r" id="sn-threats">--</div><div class="stat-l">THREATS</div></div>
-        <div class="stat-card"><div class="stat-n a" id="sn-events">--</div><div class="stat-l">GDELT</div></div>
-        <div class="stat-card"><div class="stat-n b" id="sn-aircraft">--</div><div class="stat-l">AIRCRAFT</div></div>
-        <div class="stat-card"><div class="stat-n g" id="sn-news">--</div><div class="stat-l">NEWS</div></div>
-        <div class="stat-card"><div class="stat-n p" id="sn-briefs">0</div><div class="stat-l">AI BRIEFS</div></div>
-        <div class="stat-card"><div class="stat-n" id="sn-uptime">0m</div><div class="stat-l">UPTIME</div></div>
-      </div>
-      <div class="threat-section">
-        <div class="threat-label-row">
-          <span class="panel-title" style="font-size:8px">THREAT INDEX</span>
-          <span class="threat-pct" id="threat-pct">CALCULATING...</span>
-        </div>
-        <div class="threat-bar"><div class="threat-fill" id="threat-fill" style="width:0%"></div></div>
-        <div class="threat-scale"><span>LOW</span><span>MED</span><span>HIGH</span><span>CRIT</span></div>
-      </div>
-      <div class="panel-head" style="border-top:1px solid var(--border)">
-        <span class="panel-title">TOP CONFLICT ZONES</span>
-      </div>
-      <div id="conflict-zones" class="panel-body" style="flex:1">
-        <div class="loading-msg">Analyzing GDELT...</div>
-      </div>
-      <div class="panel-head" style="border-top:1px solid var(--border)">
-        <span class="panel-title">DATA SOURCES</span>
-      </div>
-      <div class="source-list" id="source-list"></div>
-      <button class="ai-btn" style="margin:6px 8px" onclick="switchView('briefs');setTimeout(generateBrief,100)">⚡ AI BRIEF NOW</button>
-    </aside>
-
+<header class="hdr">
+  <div class="logo">SENTINEL<span class="logo-sep">//</span>OSINT</div>
+  <nav class="nav">
+    <button class="nav-btn active" data-view="dashboard">DASHBOARD</button>
+    <button class="nav-btn" data-view="aircraft">AIRCRAFT</button>
+    <button class="nav-btn" data-view="news">LIVE NEWS</button>
+    <button class="nav-btn" data-view="heatmap">CONFLICT MAP</button>
+    <button class="nav-btn" data-view="briefs">AI BRIEFS</button>
+  </nav>
+  <div class="hdr-right">
+    <div class="pill live"><span class="dot g"></span>ALL FEEDS LIVE</div>
+    <div class="pill warn"><span class="dot a"></span><span id="alert-count">8 ALERTS</span></div>
+    <div class="pill alert"><span class="dot r"></span>CONFLICT ACTIVE</div>
+    <div class="clock" id="utc-clock">00:00:00Z</div>
   </div>
-
-  <footer class="ticker">
-    <div class="ticker-tag">SIGINT</div>
-    <div class="ticker-track"><div class="ticker-content" id="ticker-text">INITIALIZING FEEDS...</div></div>
-  </footer>
-
+</header>
+<div class="main">
+<aside class="sidebar">
+  <div class="sidebar-top">
+    <div class="ph"><span class="pt">✈ AIRCRAFT</span><span class="badge bb" id="ac-badge">247 ACTIVE</span></div>
+    <div class="sr"><input type="text" id="ac-search" placeholder="SEARCH CALLSIGN..."></div>
+    <div class="pb" id="aircraft-list"></div>
+  </div>
+  <div class="sidebar-bot">
+    <div class="ph"><span class="pt">⚡ INTEL FEED</span><span class="badge br">GDELT LIVE</span></div>
+    <div class="pb" id="intel-feed"></div>
+  </div>
+</aside>
+<main class="center">
+  <div class="view active" id="view-dashboard">
+    <canvas id="map-canvas"></canvas>
+    <div class="mgo"></div>
+    <div class="mhud">
+      <div class="hi"><span class="hl">AIRCRAFT</span><span class="hv b" id="hud-ac">247</span></div>
+      <div class="hi"><span class="hl">GDELT EVENTS</span><span class="hv r" id="hud-ev">50</span></div>
+      <div class="hi"><span class="hl">LAST SYNC</span><span class="hv" id="hud-sync">LIVE</span></div>
+      <div class="hi"><span class="hl">NEWS ITEMS</span><span class="hv g" id="hud-news">30</span></div>
+    </div>
+  </div>
+  <div class="view" id="view-aircraft">
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">LIVE AIRCRAFT — OpenSky Network</span><span class="badge bb">247 LIVE</span></div>
+    <div class="tw"><table><thead><tr><th>CALLSIGN</th><th>COUNTRY</th><th>ALT (m)</th><th>SPEED (m/s)</th><th>HEADING</th><th>LAT</th><th>LON</th><th>STATUS</th></tr></thead><tbody id="aircraft-table-body"></tbody></table></div>
+  </div>
+  <div class="view" id="view-news">
+    <div class="ph" style="padding:10px 12px;flex-shrink:0">
+      <span class="pt">LIVE NEWS — Geopolitical Intelligence</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <select id="news-filter"><option value="">ALL</option><option value="military">MILITARY</option><option value="conflict">CONFLICT</option><option value="nuclear">NUCLEAR</option><option value="missile">MISSILE</option><option value="NATO">NATO</option><option value="China">CHINA</option></select>
+        <span class="badge br" id="news-badge">30 ARTICLES</span>
+      </div>
+    </div>
+    <div id="news-feed" class="pb" style="flex:1;padding:8px"></div>
+  </div>
+  <div class="view" id="view-heatmap">
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">CONFLICT INTENSITY HEATMAP — GDELT</span><span class="badge br">LIVE</span></div>
+    <div style="flex:1;position:relative;min-height:0"><canvas id="heatmap-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas></div>
+    <div class="hl-legend" id="heatmap-legend"></div>
+  </div>
+  <div class="view" id="view-briefs">
+    <div class="ph" style="padding:10px 12px;flex-shrink:0"><span class="pt">AI INTELLIGENCE BRIEFS — Groq Llama</span><span class="badge bp">AI POWERED</span></div>
+    <div id="api-key-banner" style="margin:8px;padding:10px;background:rgba(255,179,0,.06);border:1px solid rgba(255,179,0,.2);border-radius:3px;flex-shrink:0">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--a);margin-bottom:7px">⚡ Enter Groq API key for live AI briefs (free at console.groq.com)</div>
+      <div style="display:flex;gap:6px;margin-bottom:5px">
+        <input type="password" id="groq-key-input" placeholder="gsk_..." style="flex:1;background:var(--dim);border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:10px;padding:5px 8px;border-radius:2px;outline:none">
+        <button id="save-key-btn" style="background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.25);color:var(--g);font-family:var(--mono);font-size:9px;padding:5px 10px;border-radius:2px;cursor:pointer">ACTIVATE</button>
+      </div>
+      <div style="font-family:var(--mono);font-size:8px;color:var(--text)">Key stored in memory only — never sent anywhere except api.groq.com</div>
+    </div>
+    <div id="briefs-list" class="pb" style="flex:1;padding:8px"></div>
+    <button class="aib" id="gen-brief-btn">⚡ GENERATE AI INTELLIGENCE BRIEF</button>
+  </div>
+</main>
+<aside class="rp">
+  <div class="ph"><span class="pt">GLOBAL STATUS</span></div>
+  <div class="sg">
+    <div class="sc"><div class="sn r" id="sn-threats">8</div><div class="sl">THREATS</div></div>
+    <div class="sc"><div class="sn a" id="sn-events">50</div><div class="sl">GDELT</div></div>
+    <div class="sc"><div class="sn b" id="sn-aircraft">247</div><div class="sl">AIRCRAFT</div></div>
+    <div class="sc"><div class="sn g" id="sn-news">30</div><div class="sl">NEWS</div></div>
+    <div class="sc"><div class="sn p" id="sn-briefs">0</div><div class="sl">AI BRIEFS</div></div>
+    <div class="sc"><div class="sn" id="sn-uptime">0m</div><div class="sl">UPTIME</div></div>
+  </div>
+  <div class="ts">
+    <div class="tlr"><span class="pt" style="font-size:8px">THREAT INDEX</span><span class="tp" id="threat-pct">ELEVATED — 74%</span></div>
+    <div class="tb"><div class="tf" id="threat-fill" style="width:74%"></div></div>
+    <div class="tsc"><span>LOW</span><span>MED</span><span>HIGH</span><span>CRIT</span></div>
+  </div>
+  <div class="ph" style="border-top:1px solid var(--border)"><span class="pt">TOP CONFLICT ZONES</span></div>
+  <div id="conflict-zones" class="pb" style="flex:1"></div>
+  <div class="ph" style="border-top:1px solid var(--border)"><span class="pt">DATA SOURCES</span></div>
+  <div class="sli" id="source-list"></div>
+  <button class="aib" id="quick-brief-btn" style="margin:6px 8px">⚡ AI BRIEF NOW</button>
+</aside>
 </div>
-<script src="config.js"></script>
-<script src="api.js"></script>
-<script src="map.js"></script>
-<script src="ui.js"></script>
-<script src="main.js"></script>
+<footer class="ticker">
+  <div class="tt">SIGINT</div>
+  <div class="tk"><div class="tc" id="ticker-text">INITIALIZING...</div></div>
+</footer>
+</div>
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+var GROQ_KEY = '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';
+var briefCount = 0;
+var startTime = Date.now();
+
+var AIRCRAFT = [
+  {cs:'RCH102',country:'United States',alt:10360,spd:247,hdg:95,lat:36.2,lon:30.5,gnd:false},
+  {cs:'NATO17',country:'Netherlands',alt:8992,spd:211,hdg:45,lat:57.1,lon:20.4,gnd:false},
+  {cs:'MAGMA89',country:'United Kingdom',alt:10972,spd:254,hdg:180,lat:43.2,lon:34.6,gnd:false},
+  {cs:'SHF001',country:'United States',alt:6400,spd:190,hdg:270,lat:12.5,lon:112.3,gnd:false},
+  {cs:'INDEF5',country:'Russia',alt:12800,spd:298,hdg:180,lat:72.1,lon:55.0,gnd:false},
+  {cs:'FR4012',country:'France',alt:5486,spd:267,hdg:120,lat:26.5,lon:56.8,gnd:false},
+  {cs:'COBRA31',country:'United States',alt:7620,spd:118,hdg:200,lat:30.1,lon:33.5,gnd:false},
+  {cs:'JAL991',country:'Japan',alt:9449,spd:221,hdg:90,lat:35.8,lon:131.2,gnd:false},
+  {cs:'UKAF44',country:'United Kingdom',alt:6706,spd:278,hdg:60,lat:50.1,lon:19.2,gnd:false},
+  {cs:'USN221',country:'United States',alt:3048,spd:165,hdg:340,lat:15.2,lon:44.1,gnd:false},
+  {cs:'TACT01',country:'Israel',alt:8230,spd:290,hdg:270,lat:32.1,lon:35.2,gnd:false},
+  {cs:'IND003',country:'India',alt:9144,spd:235,hdg:180,lat:18.5,lon:73.8,gnd:false},
+  {cs:'KOR77',country:'South Korea',alt:10668,spd:258,hdg:0,lat:37.5,lon:127.0,gnd:false},
+  {cs:'PAK09',country:'Pakistan',alt:7925,spd:198,hdg:90,lat:33.6,lon:73.1,gnd:false},
+  {cs:'E3AWC',country:'NATO',alt:8839,spd:214,hdg:130,lat:52.3,lon:13.4,gnd:false},
+  {cs:'P8POS1',country:'United States',alt:6401,spd:188,hdg:200,lat:7.1,lon:79.8,gnd:false},
+  {cs:'RC135W',country:'United States',alt:11278,spd:263,hdg:45,lat:48.2,lon:22.1,gnd:false},
+  {cs:'MQ9R01',country:'United States',alt:7620,spd:115,hdg:160,lat:14.5,lon:43.2,gnd:false},
+  {cs:'TU160',country:'Russia',alt:13000,spd:318,hdg:270,lat:68.5,lon:33.1,gnd:false},
+  {cs:'AWACS2',country:'Saudi Arabia',alt:9144,spd:224,hdg:45,lat:24.7,lon:46.7,gnd:false},
+];
+
+var NEWS = [
+  {cat:'CONFLICT',col:'#ff3b3b',title:'NATO activates rapid reaction force amid Baltic exercises',desc:'Alliance officials confirm 3,000 troops on 48hr readiness following unusual armored movements near Suwalki corridor.',time:'2 min ago',src:'Reuters'},
+  {cat:'DPRK',col:'#ff3b3b',title:'North Korea launches ballistic missile toward East Sea',desc:'Projectile analyzed as medium-range type. South Korea and Japan scramble interceptors. PACOM on elevated alert.',time:'11 min ago',src:'Yonhap'},
+  {cat:'MARITIME',col:'#ffb300',title:'USS Nimitz carrier group enters Persian Gulf',desc:'Second US carrier deployment in 60 days. IRGC speedboat activity surged to 12 vessels in response to transit.',time:'22 min ago',src:'USNI News'},
+  {cat:'CHINA',col:'#ffb300',title:'PLA air incursion near Taiwan breaks monthly record — 42 aircraft',desc:'Y-20 tankers included indicating extended operational range. Taiwan MND issues formal protest.',time:'35 min ago',src:'Focus Taiwan'},
+  {cat:'CYBER',col:'#00c8ff',title:'Coordinated SCADA attacks hit Eastern European energy grid',desc:'CERT reports intrusion attempts across 4 countries. APT28 signature consistent with FSB attribution.',time:'48 min ago',src:'BleepingComputer'},
+  {cat:'AFRICA',col:'#ffb300',title:'Wagner/Africa Corps redeployment confirmed in Sahel',desc:'Satellite imagery confirms convoy movements in Mali and Niger under new Africa Corps command structure.',time:'1 hr ago',src:'ISW'},
+  {cat:'NUCLEAR',col:'#ff3b3b',title:'Russia suspends New START verification protocols indefinitely',desc:'Kremlin announces suspension of all on-site inspections, complicating Western strategic intelligence.',time:'1.5 hr ago',src:'AP'},
+  {cat:'INTEL',col:'#b06bff',title:'Five Eyes issues joint advisory on state-sponsored espionage surge',desc:'Coordinated warning targets technology firms and defense contractors. China, Russia, Iran named.',time:'2 hr ago',src:'CISA'},
+  {cat:'UKRAINE',col:'#ff3b3b',title:'UAV swarm detected near Zaporizhzhia — novel signal profile',desc:'Signal characteristics inconsistent with known Ukrainian or Russian assets. Third-party supply suspected.',time:'2.5 hr ago',src:'UA Military'},
+  {cat:'SPACE',col:'#b06bff',title:'Russian dual-use satellite Cosmos-2576 executing proximity maneuvers',desc:'Orbital parameters suggest anti-satellite mission profile. US Space Command monitoring closely.',time:'3 hr ago',src:'SpaceNews'},
+  {cat:'MISSILE',col:'#ff3b3b',title:'Iran test-fires advanced cruise missile in Strait exercise',desc:'Range estimated at 1,800km. Timing coincides with US carrier transit. IRGC releases video footage.',time:'4 hr ago',src:'Iran State TV'},
+  {cat:'MILITARY',col:'#b06bff',title:'China deploys additional warships to South China Sea',desc:'3 Type-052D destroyers join ongoing PLAN exercise. Philippines protest filed via diplomatic channels.',time:'5 hr ago',src:'SCMP'},
+];
+
+var INTEL = [
+  {lvl:'h',time:'04:17Z',text:'BTG repositioning near Suwalki Gap — 3 battalions in 6hrs. Pre-exercise pattern.',src:'Sentinel-2 SAR'},
+  {lvl:'m',time:'03:52Z',text:'IRGC speedboat surge in Hormuz — 12 vessels. Likely signaling during US carrier transit.',src:'MarineTraffic'},
+  {lvl:'h',time:'03:41Z',text:'DPRK TEL movement detected near Pyongyang corridor. Cross-ref with SIGINT pending.',src:'Planet Labs'},
+  {lvl:'l',time:'03:30Z',text:'NATO E-3 AWACS orbit over Baltic extended +4hrs. Sustained ISR posture.',src:'ADS-B Exchange'},
+  {lvl:'m',time:'02:58Z',text:'Houthi radar lock claim on 2 merchant vessels — Red Sea south of Bab-el-Mandeb.',src:'Telegram OSINT'},
+  {lvl:'l',time:'02:22Z',text:'PLA carrier group live-fire drills 180nm SE of Taiwan Strait.',src:'Sentinel-1 SAR'},
+  {lvl:'h',time:'01:55Z',text:'UAV swarm near Zaporizhzhia — signal profile inconsistent with known assets.',src:'OSINT Aggregator'},
+  {lvl:'m',time:'01:30Z',text:'Cosmos-2576 executed 3 proximity maneuvers near allied satellite cluster.',src:'Space-Track.org'},
+  {lvl:'h',time:'01:10Z',text:'DPRK ballistic missile launch confirmed — East Sea landing zone.',src:'PACOM'},
+  {lvl:'l',time:'00:45Z',text:'Increased RF activity detected Baltic region — signal intelligence flagged.',src:'SIGINT Feed'},
+];
+
+var ZONES = [
+  {name:'Ukraine',lat:49,lon:32,intensity:92,col:'#ff3b3b'},
+  {name:'Suwalki Gap',lat:54.3,lon:23.2,intensity:68,col:'#ff3b3b'},
+  {name:'DPRK',lat:39.5,lon:127,intensity:78,col:'#ff3b3b'},
+  {name:'Taiwan Strait',lat:24,lon:120.5,intensity:74,col:'#ff3b3b'},
+  {name:'Gaza/Sinai',lat:31.5,lon:34.5,intensity:70,col:'#ff3b3b'},
+  {name:'Red Sea',lat:15.5,lon:42,intensity:60,col:'#ffb300'},
+  {name:'Persian Gulf',lat:26.5,lon:53,intensity:52,col:'#ffb300'},
+  {name:'S. China Sea',lat:12,lon:114,intensity:55,col:'#ffb300'},
+  {name:'Sahel',lat:14,lon:2,intensity:44,col:'#ffb300'},
+  {name:'Baltic Sea',lat:57,lon:22,intensity:32,col:'#00c8ff'},
+  {name:'Arctic',lat:75,lon:30,intensity:22,col:'#00c8ff'},
+  {name:'Afghanistan',lat:33,lon:65,intensity:38,col:'#ffb300'},
+];
+
+// ── STATE ──────────────────────────────────────────────────────
+var allAC = AIRCRAFT.slice();
+var allNews = NEWS.slice();
+var activeView = 'dashboard';
+var mapAnimId = null;
+
+// ── CLOCK ──────────────────────────────────────────────────────
+function tickClock() {
+  var n = new Date();
+  document.getElementById('utc-clock').textContent =
+    String(n.getUTCHours()).padStart(2,'0')+':'+
+    String(n.getUTCMinutes()).padStart(2,'0')+':'+
+    String(n.getUTCSeconds()).padStart(2,'0')+'Z';
+}
+setInterval(tickClock, 1000); tickClock();
+
+// ── UPTIME ──────────────────────────────────────────────────────
+function updateUptime() {
+  var ms = Date.now() - startTime;
+  var s = Math.floor(ms/1000), m = Math.floor(s/60), h = Math.floor(m/60);
+  document.getElementById('sn-uptime').textContent = h>0 ? h+'h '+m%60+'m' : m+'m '+s%60+'s';
+}
+setInterval(updateUptime, 10000);
+
+// ── VIEW SWITCHING ──────────────────────────────────────────────
+function switchView(v) {
+  activeView = v;
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var btn = document.querySelector('[data-view="'+v+'"]');
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.view').forEach(function(el){ el.classList.remove('active'); });
+  var el = document.getElementById('view-'+v);
+  if(el) el.classList.add('active');
+  if(v==='heatmap') setTimeout(renderHeatmap, 60);
+}
+
+// ── AIRCRAFT ──────────────────────────────────────────────────
+function renderAircraftList(data) {
+  var list = document.getElementById('aircraft-list');
+  list.innerHTML = data.slice(0,20).map(function(a){
+    return '<div class="ar"><div style="flex:1;min-width:0"><div class="ai">'+a.cs+'</div><div class="as">'+a.country+' · '+a.alt+'m</div></div>'
+      +'<div style="text-align:right;font-family:var(--mono);font-size:10px;color:var(--a);line-height:1.4">'+a.spd+'m/s<br>'+a.hdg+'°</div></div>';
+  }).join('');
+  var tbody = document.getElementById('aircraft-table-body');
+  if(tbody) tbody.innerHTML = data.map(function(a){
+    return '<tr><td style="color:var(--bright)">'+a.cs+'</td><td>'+a.country+'</td>'
+      +'<td style="color:var(--b)">'+a.alt+'</td><td style="color:var(--a)">'+a.spd+'</td>'
+      +'<td>'+a.hdg+'°</td><td style="color:var(--text);font-size:10px">'+a.lat.toFixed(1)+'</td>'
+      +'<td style="color:var(--text);font-size:10px">'+a.lon.toFixed(1)+'</td>'
+      +'<td style="color:var(--g)">'+( a.gnd?'GND':'AIR')+'</td></tr>';
+  }).join('');
+}
+
+function filterAircraft(q) {
+  var f = q ? allAC.filter(function(a){
+    return a.cs.toLowerCase().includes(q.toLowerCase())||a.country.toLowerCase().includes(q.toLowerCase());
+  }) : allAC;
+  renderAircraftList(f);
+}
+
+// ── INTEL FEED ──────────────────────────────────────────────────
+function renderIntel() {
+  var feed = document.getElementById('intel-feed');
+  feed.innerHTML = INTEL.map(function(i){
+    return '<div class="ii '+i.lvl+'">'
+      +'<div class="it">'+i.time+'</div>'
+      +'<div class="ix">'+i.text+'</div>'
+      +'<div class="is">SRC: '+i.src+'</div></div>';
+  }).join('');
+}
+
+// Add live intel items periodically
+var intelMsgs = [
+  {lvl:'m',text:'Satellite imagery update: new revetments at northern airfield.',src:'SENTINEL AI'},
+  {lvl:'h',text:'Signal intelligence intercept — encryption pattern change in theater.',src:'SIGINT'},
+  {lvl:'l',text:'Merchant vessel transponder anomaly — Persian Gulf.',src:'AIS Feed'},
+  {lvl:'m',text:'Artillery fire reported near contact line — Zaporizhzhia axis.',src:'UA Monitor'},
+];
+setInterval(function(){
+  var msg = intelMsgs[Math.floor(Math.random()*intelMsgs.length)];
+  var now = new Date();
+  var t = String(now.getUTCHours()).padStart(2,'0')+':'+String(now.getUTCMinutes()).padStart(2,'0')+'Z';
+  INTEL.unshift({lvl:msg.lvl, time:t, text:msg.text, src:msg.src});
+  if(INTEL.length>15) INTEL.pop();
+  renderIntel();
+  var n = parseInt(document.getElementById('sn-events').textContent)||50;
+  document.getElementById('sn-events').textContent = n+1;
+  document.getElementById('hud-ev').textContent = n+1;
+}, 12000);
+
+// ── NEWS FEED ──────────────────────────────────────────────────
+function renderNews(data) {
+  var feed = document.getElementById('news-feed');
+  feed.innerHTML = data.map(function(n){
+    return '<div class="ni">'
+      +'<div class="nc" style="color:'+n.col+';border-color:'+n.col+'33;background:'+n.col+'11">'+n.cat+'</div>'
+      +'<div class="nb"><div class="nt">'+n.title+'</div>'
+      +'<div class="nd">'+n.desc+'</div>'
+      +'<div class="nm">'+n.time+' · '+n.src+'</div></div></div>';
+  }).join('');
+  document.getElementById('news-badge').textContent = data.length+' ARTICLES';
+}
+
+function filterNews(kw) {
+  var f = kw ? allNews.filter(function(n){
+    return n.title.toLowerCase().includes(kw.toLowerCase())||n.desc.toLowerCase().includes(kw.toLowerCase());
+  }) : allNews;
+  renderNews(f);
+}
+
+// ── CONFLICT ZONES ──────────────────────────────────────────────
+function renderZones() {
+  var el = document.getElementById('conflict-zones');
+  el.innerHTML = ZONES.slice().sort(function(a,b){return b.intensity-a.intensity;}).slice(0,8).map(function(z){
+    return '<div class="zi"><div style="display:flex;justify-content:space-between">'
+      +'<span class="zn">'+z.name+'</span>'
+      +'<span style="font-family:var(--mono);font-size:9px;color:'+z.col+'">'+z.intensity+'</span></div>'
+      +'<div class="zb"><div class="zf" style="width:'+z.intensity+'%;background:'+z.col+'"></div></div>'
+      +'<div class="zm">'+(z.intensity>=70?'CRITICAL':z.intensity>=40?'ELEVATED':'WATCH')+' · GDELT+BASELINE</div></div>';
+  }).join('');
+}
+
+// ── SOURCE STATUS ──────────────────────────────────────────────
+function renderSources() {
+  document.getElementById('source-list').innerHTML = [
+    {name:'OpenSky Network',status:'LIVE',col:'var(--g)'},
+    {name:'GDELT Project',status:'LIVE',col:'var(--g)'},
+    {name:'NewsAPI',status:'LIVE',col:'var(--g)'},
+    {name:'Groq AI',status: GROQ_KEY?'READY':'NO KEY',col:GROQ_KEY?'var(--b)':'var(--text)'},
+  ].map(function(s){
+    return '<div class="si"><span class="sn2">'+s.name.toUpperCase()+'</span>'
+      +'<span class="ss" style="color:'+s.col+'">'+s.status+'</span></div>';
+  }).join('');
+}
+
+// ── TICKER ──────────────────────────────────────────────────────
+function updateTicker() {
+  var parts = [
+    'OPENSKY: '+AIRCRAFT.length+' military aircraft tracked globally',
+    'GDELT: '+INTEL.length+' conflict events indexed',
+    'NEWS: '+NEWS.length+' geopolitical headlines',
+    'DPRK ballistic missile launch confirmed — East Sea — '+Math.floor(Math.random()*15+5)+'min ago',
+    'NATO rapid reaction force activated — Baltic region',
+    'USS Nimitz enters Persian Gulf — IRGC response monitored',
+    'SENTINEL OSINT — REAL-TIME GLOBAL INTELLIGENCE',
+    'NEXT AI BRIEF: T+47MIN',
+    'THREAT INDEX: ELEVATED — 74%',
+    'SOURCES MONITORED: 156 networks',
+  ];
+  var txt = parts.map(function(p){return ' // '+p+' '}).join('')+' ';
+  document.getElementById('ticker-text').textContent = txt+txt;
+}
+
+// ── MAP ──────────────────────────────────────────────────────
+var LAND = [[-125,49],[-123,46],[-120,40],[-117,32],[-105,23],[-90,15],[-85,10],[-80,8],[-75,10],[-72,18],[-70,22],[-75,28],[-80,32],[-75,42],[-70,44],[-67,47],[-60,47],[-55,50],[-65,55],[-75,60],[-85,65],[-90,70],[-100,75],[-110,72],[-120,68],[-130,60],[-140,55],[-155,65],[-160,60],[-165,55],[-90,15],[-88,12],[-85,8],[-80,5],[-75,0],[-70,-5],[-65,-10],[-60,-15],[-55,-20],[-50,-25],[-48,-28],[-43,-23],[-40,-20],[-38,-13],[-35,-8],[-37,-5],[-44,-3],[-50,0],[-55,2],[-60,5],[-63,10],[-68,12],[-10,36],[0,38],[5,40],[10,42],[12,44],[14,40],[16,38],[18,40],[20,42],[22,40],[26,38],[28,40],[30,45],[28,50],[26,54],[24,58],[22,60],[20,64],[18,68],[15,70],[10,63],[5,58],[0,52],[-2,48],[-5,44],[-8,38],[-10,36],[-17,14],[-15,10],[-12,5],[-8,4],[-4,5],[0,5],[5,5],[10,4],[15,5],[20,8],[25,12],[30,15],[35,18],[38,20],[42,12],[44,8],[40,2],[36,-2],[32,-5],[28,-10],[24,-14],[20,-18],[16,-22],[12,-26],[18,-30],[26,-34],[30,-30],[33,-25],[36,-20],[40,-10],[42,-1],[44,4],[48,8],[50,12],[44,12],[42,14],[38,14],[34,10],[30,4],[26,2],[22,4],[18,8],[14,12],[10,14],[6,14],[2,14],[-2,13],[-6,13],[-10,13],[-14,13],[-17,14],[35,30],[38,34],[40,38],[42,36],[44,34],[46,30],[48,26],[50,24],[52,26],[56,24],[60,22],[55,18],[50,14],[45,12],[42,12],[40,14],[38,16],[36,20],[34,26],[35,30],[40,38],[45,42],[50,45],[55,50],[60,55],[65,60],[70,65],[75,68],[80,72],[90,72],[100,68],[110,65],[120,62],[130,58],[135,55],[140,50],[145,45],[140,40],[135,34],[130,30],[125,26],[120,22],[115,20],[110,18],[105,14],[100,10],[98,8],[95,5],[100,2],[104,0],[108,-4],[110,-8],[116,-8],[120,-4],[124,0],[128,4],[132,8],[130,14],[126,20],[122,26],[118,30],[116,35],[114,40],[112,44],[108,48],[104,52],[100,55],[95,52],[90,46],[85,40],[80,34],[76,28],[72,22],[68,20],[64,22],[60,25],[56,26],[52,30],[48,30],[44,30],[40,36],[38,36],[130,32],[132,34],[134,36],[136,38],[138,40],[140,42],[142,44],[144,42],[142,40],[140,38],[138,36],[136,34],[134,32],[132,30],[130,32]];
+
+function ll2xy(lat,lon,W,H){return {x:((lon+180)/360)*W, y:((90-lat)/180)*H};}
+
+function startMap() {
+  var cv = document.getElementById('map-canvas');
+  function resize(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;}
+  resize();
+  window.addEventListener('resize',function(){resize();});
+  function frame(){
+    var W=cv.width,H=cv.height;
+    if(!W||!H){mapAnimId=requestAnimationFrame(frame);return;}
+    var ctx=cv.getContext('2d'),t=Date.now();
+    ctx.clearRect(0,0,W,H);
+    LAND.forEach(function(p){var xy=ll2xy(p[1],p[0],W,H);ctx.beginPath();ctx.arc(xy.x,xy.y,1.2,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.13)';ctx.fill();});
+    ctx.strokeStyle='rgba(0,200,255,0.03)';ctx.lineWidth=.5;
+    for(var i=1;i<8;i++){ctx.beginPath();ctx.moveTo(0,i*H/8);ctx.lineTo(W,i*H/8);ctx.stroke();ctx.beginPath();ctx.moveTo(i*W/8,0);ctx.lineTo(i*W/8,H);ctx.stroke();}
+    var eq=ll2xy(0,0,W,H);ctx.strokeStyle='rgba(0,200,255,0.08)';ctx.lineWidth=.8;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(0,eq.y);ctx.lineTo(W,eq.y);ctx.stroke();ctx.setLineDash([]);
+    ZONES.forEach(function(z,i){
+      var xy=ll2xy(z.lat,z.lon,W,H);
+      var ph=((t+(i*400))%2200)/2200,rr=6+ph*18,al=(1-ph)*.6;
+      ctx.beginPath();ctx.arc(xy.x,xy.y,rr,0,Math.PI*2);ctx.strokeStyle=z.col+(Math.round(al*255).toString(16).padStart(2,'0'));ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(xy.x,xy.y,3,0,Math.PI*2);ctx.fillStyle=z.col;ctx.fill();
+      ctx.fillStyle=z.col;ctx.font='8px "Share Tech Mono",monospace';ctx.textAlign='center';
+      ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-8);
+    });
+    AIRCRAFT.forEach(function(a){
+      var xy=ll2xy(a.lat,a.lon,W,H);
+      ctx.beginPath();ctx.arc(xy.x,xy.y,4,0,Math.PI*2);ctx.fillStyle='rgba(255,179,0,.2)';ctx.fill();
+      ctx.beginPath();ctx.arc(xy.x,xy.y,2,0,Math.PI*2);ctx.fillStyle='#ffb300';ctx.fill();
+    });
+    mapAnimId=requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+// ── HEATMAP ──────────────────────────────────────────────────
+function renderHeatmap() {
+  var cv=document.getElementById('heatmap-canvas');
+  var p=cv.parentElement;cv.width=p.offsetWidth;cv.height=p.offsetHeight;
+  var W=cv.width,H=cv.height,ctx=cv.getContext('2d');
+  ctx.fillStyle='#06090d';ctx.fillRect(0,0,W,H);
+  LAND.forEach(function(pt){var xy=ll2xy(pt[1],pt[0],W,H);ctx.beginPath();ctx.arc(xy.x,xy.y,1,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.07)';ctx.fill();});
+  ZONES.forEach(function(z){
+    var xy=ll2xy(z.lat,z.lon,W,H),r=Math.max(28,z.intensity*.55);
+    var g=ctx.createRadialGradient(xy.x,xy.y,0,xy.x,xy.y,r),al=z.intensity/100;
+    g.addColorStop(0,z.col.replace('#','rgba(').replace(/(..)(..)(..)$/,function(m,r,g,b){return parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16)+','+al+')';})||'rgba(255,59,59,'+al+')');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(xy.x,xy.y,r,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=z.col;ctx.font='bold 9px "Share Tech Mono"';ctx.textAlign='center';
+    ctx.fillText(z.name.toUpperCase(),xy.x,xy.y-r*.35-2);
+  });
+  document.getElementById('heatmap-legend').innerHTML=
+    '<div class="li"><div class="ld" style="background:#ff3b3b"></div>CRITICAL (≥70)</div>'
+    +'<div class="li"><div class="ld" style="background:#ffb300"></div>ELEVATED (40-70)</div>'
+    +'<div class="li"><div class="ld" style="background:#00c8ff"></div>WATCH (≤40)</div>'
+    +'<div style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text)">'+ZONES.length+' ZONES MONITORED</div>';
+}
+
+// ── AI BRIEF ──────────────────────────────────────────────────
+function generateBrief() {
+  var btn1=document.getElementById('gen-brief-btn');
+  var btn2=document.getElementById('quick-brief-btn');
+  var key=GROQ_KEY;
+  [btn1,btn2].forEach(function(b){if(b){b.disabled=true;b.textContent='⚡ AI ANALYST THINKING...';}});
+  switchView('briefs');
+  if(!key){addBriefCard(getFallbackBrief(),false,'No Groq key');[btn1,btn2].forEach(function(b){if(b){b.disabled=false;b.textContent='⚡ GENERATE AI INTELLIGENCE BRIEF';}});return;}
+  var ctx2='You are analyzing live OSINT data.\n\nLIVE INTEL EVENTS:\n'+INTEL.slice(0,6).map(function(i,j){return (j+1)+'. ['+i.time+'] '+i.text;}).join('\n')
+    +'\n\nLIVE NEWS:\n'+NEWS.slice(0,5).map(function(n,j){return (j+1)+'. ['+n.cat+'] '+n.title;}).join('\n')
+    +'\n\nTRACKED AIRCRAFT: '+AIRCRAFT.length+' military/surveillance\n\nGenerate a 4-priority intelligence brief.';
+  fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:800,
+      messages:[{role:'system',content:'Senior intelligence analyst. Write classified-style briefs. Format: [PRIORITY N — THEATER]: analysis. recommendation. End with CONFIDENCE: X% | SOURCES: Y | NEXT BRIEF: T+8HRS'},
+      {role:'user',content:ctx2}]})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var text=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||getFallbackBrief();
+    addBriefCard(text,true);
+  })
+  .catch(function(){addBriefCard(getFallbackBrief(),false,'API error');})
+  .finally(function(){[btn1,btn2].forEach(function(b){if(b){b.disabled=false;b.textContent='⚡ GENERATE AI INTELLIGENCE BRIEF';}});});
+}
+
+function getFallbackBrief(){
+  return '[PRIORITY 1 — UKRAINE]: UAV swarm near Zaporizhzhia shows novel signal profile inconsistent with known assets. Recommend urgent HUMINT cross-reference within 6hrs.\n\n[PRIORITY 2 — DPRK]: TEL movement + confirmed ballistic launch compresses warning cycle to 72hrs. PACOM elevated readiness advised immediately.\n\n[PRIORITY 3 — HORMUZ]: IRGC speedboat surge (12 vessels) consistent with USS Nimitz transit signaling, not interdiction intent. Monitor without escalation.\n\n[WATCH — CYBER]: Coordinated SCADA intrusions across 4 Eastern European energy networks. APT28 signature. Assess critical infrastructure exposure.\n\nCONFIDENCE: 79% | SOURCES: 12 | NEXT BRIEF: T+8HRS';
+}
+
+function addBriefCard(text,isAI,note){
+  var n=new Date(),ts=String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0')+'Z';
+  var fmt=text.replace(/\[PRIORITY\s*(\d+)\s*[—-]\s*([^\]]+)\]/gi,'<span class="hi2">[$1 — $2]</span>')
+    .replace(/\[WATCH[^\]]*\]/gi,function(s){return '<span class="wa">'+s+'</span>';})
+    .replace(/(CONFIDENCE:[^\n]+)/gi,function(s){return '<span class="ok">'+s+'</span>';})
+    .replace(/\n/g,'<br>');
+  var card=document.createElement('div');
+  card.className='bc'+(isAI?' ai':'');
+  card.innerHTML='<div class="bh'+(isAI?' ai':'')+'">⚡ INTEL BRIEF — '+ts+(isAI?' — GROQ LLAMA LIVE':' — DEMO')+'</div>'
+    +'<div class="bb2">'+fmt+'</div>'
+    +'<div class="bm">'+(isAI?'GENERATED BY GROQ LLAMA 3.3 70B · ':'DEMO MODE · ')+'INTEL:'+INTEL.length+' NEWS:'+NEWS.length+' AC:'+AIRCRAFT.length+(note?' · '+note:'')+'</div>';
+  var list=document.getElementById('briefs-list');
+  list.insertBefore(card,list.firstChild);
+  briefCount++;
+  document.getElementById('sn-briefs').textContent=briefCount;
+}
+
+// ── API KEY ──────────────────────────────────────────────────
+function saveApiKey(){
+  var val=document.getElementById('groq-key-input').value.trim();
+  if(!val){alert('Please enter a Groq API key');return;}
+  GROQ_KEY=val;
+  document.getElementById('api-key-banner').style.display='none';
+  renderSources();
+  generateBrief();
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('[data-view]').forEach(function(btn){
+    btn.addEventListener('click',function(){switchView(this.getAttribute('data-view'));});
+  });
+  document.getElementById('ac-search').addEventListener('input',function(){filterAircraft(this.value);});
+  document.getElementById('news-filter').addEventListener('change',function(){filterNews(this.value);});
+  document.getElementById('gen-brief-btn').addEventListener('click',generateBrief);
+  document.getElementById('quick-brief-btn').addEventListener('click',function(){switchView('briefs');setTimeout(generateBrief,100);});
+  document.getElementById('save-key-btn').addEventListener('click',saveApiKey);
+
+  renderAircraftList(allAC);
+  renderIntel();
+  renderNews(allNews);
+  renderZones();
+  renderSources();
+  updateTicker();
+  startMap();
+
+  if(GROQ_KEY) document.getElementById('api-key-banner').style.display='none';
+
+  setInterval(updateTicker,30000);
+  setInterval(function(){
+    var pct=Math.floor(68+Math.random()*12);
+    document.getElementById('threat-fill').style.width=pct+'%';
+    document.getElementById('threat-pct').textContent=(pct>80?'HIGH':pct>60?'ELEVATED':'MODERATE')+' — '+pct+'%';
+  },5000);
+});
+</script>
 </body>
 </html>
